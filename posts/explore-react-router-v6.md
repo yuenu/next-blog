@@ -4,7 +4,7 @@ date: '2023-01-17'
 tags: react react-router
 ---
 
-![react-router ](/images/post/explore-react-router-v6/react-router.jpeg)
+![React Router](/images/post/explore-react-router-v6/react-router.jpeg)
 
 ### 專案上需要用到 cache 頁面
 
@@ -46,7 +46,7 @@ tags: react react-router
 
 - 由 React Query 團隊開源的 [TanStack Router](https://tanstack.com/router/v1) (不過現在還在 beta 中，文檔也還不齊全，不過看得出來他們的野心，想要讓現在主流框架都能使用到)
 
-{% asset_img tanStack-router.png TanStack Router %}
+![TanStack Router](/images/post/explore-react-router-v6/tanStack-router.png)
 
 ### 本文開始
 

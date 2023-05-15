@@ -4,15 +4,15 @@ date: '2023-01-06'
 tags: 優化 vue2 react webpack
 ---
 
+![React Router](/images/post/legacy-project-optimization/g1.png)
 
-{% asset_img g1.png g1 %}
-最近公司內部的專案在開發run server時，花費的時間越來越久
+最近公司內部的專案在開發 run server 時，花費的時間越來越久
 
-主要是用vue2搭配element-ui 然後還有許多大大小小的套件，
-這個專案主要是做報表系統，有50+以上的頁面，
-所以相對應的component也不少
-再配合上webpack + babel的編譯，
-所以不光是起server連同編輯檔案後儲存重新編譯的時間也花上不少
+主要是用 vue2 搭配 element-ui 然後還有許多大大小小的套件，
+這個專案主要是做報表系統，有 50+以上的頁面，
+所以相對應的 component 也不少
+再配合上 webpack + babel 的編譯，
+所以不光是起 server 連同編輯檔案後儲存重新編譯的時間也花上不少
 
 ```bash
 // 此專案主要用的library && framework
@@ -24,15 +24,15 @@ tags: 優化 vue2 react webpack
 
 最近專案需求剛好告一段落，所以開始著手研究相對應的優化
 
-> 這邊專注的是DX(Development Experience)優化，並不是頁面的優化
+> 這邊專注的是 DX(Development Experience)優化，並不是頁面的優化
 
-### 為此我們要先寫一個webpack plugin來看啟動時間要耗時多久
+### 為此我們要先寫一個 webpack plugin 來看啟動時間要耗時多久
 
-如此一來我們才能量化所需的時間(~我們的績效😎~)
+如此一來我們才能量化所需的時間(~我們的績效 😎~)
 
-先創建一個ConsolelogPlugin.js，放在根目錄
+先創建一個 ConsolelogPlugin.js，放在根目錄
 
-需要的library
+需要的 library
 
 - [chalk](https://github.com/chalk/chalk#readme)
 - [single-line-log](https://github.com/freeall/single-line-log)
@@ -40,62 +40,62 @@ tags: 優化 vue2 react webpack
 ```js
 // ConsolelogPlugin.js
 const chalk = require('chalk') /* console 顏色 */
-const slog = require('single-line-log'); /* 單行 Print console */
+const slog = require('single-line-log') /* 單行 Print console */
 
 class ConsolegPlugin {
-    constructor(options){
-       this.options = options
-    }
-    apply(compiler){
-        /**
-         * Monitor file change 記錄當前改動文件
-         */
-        compiler.hooks.watchRun.tap('ConsolePlugin', (watching) => {
-            const changeFiles = watching.watchFileSystem.watcher.mtimes
-            for(let file in changeFiles){
-                console.log(chalk.green('當前改動文件：'+ file))
-            }
-        })
-        /**
-         *  before a new compilation is created. 
-         *  開始 compilation 編譯 。
-         */
-        compiler.hooks.compile.tap('ConsolePlugin',()=>{
-            this.beginCompile()
-        })
-        /**
-         * Executed when the compilation has completed. 
-         * 一次 compilation 完成。
-         */
-        compiler.hooks.done.tap('ConsolePlugin',()=>{
-            this.timer && clearInterval( this.timer )
-            const endTime =  new Date().getTime()
-            const time = (endTime - this.starTime) / 1000
-            console.log( chalk.yellow(' 編譯完成') )
-            console.log( chalk.yellow('編譯用時：' + time + '秒' ) )
-        })
-    }
-    beginCompile(){
-       const lineSlog = slog.stdout
-       let text  = '開始編譯：'
-       /* 記錄開始時間 */
-       this.starTime =  new Date().getTime()
-       this.timer = setInterval(()=>{
-          text +=  '█'
-          lineSlog( chalk.green(text))
-       },50)
-    }
+  constructor(options) {
+    this.options = options
+  }
+  apply(compiler) {
+    /**
+     * Monitor file change 記錄當前改動文件
+     */
+    compiler.hooks.watchRun.tap('ConsolePlugin', (watching) => {
+      const changeFiles = watching.watchFileSystem.watcher.mtimes
+      for (let file in changeFiles) {
+        console.log(chalk.green('當前改動文件：' + file))
+      }
+    })
+    /**
+     *  before a new compilation is created.
+     *  開始 compilation 編譯 。
+     */
+    compiler.hooks.compile.tap('ConsolePlugin', () => {
+      this.beginCompile()
+    })
+    /**
+     * Executed when the compilation has completed.
+     * 一次 compilation 完成。
+     */
+    compiler.hooks.done.tap('ConsolePlugin', () => {
+      this.timer && clearInterval(this.timer)
+      const endTime = new Date().getTime()
+      const time = (endTime - this.starTime) / 1000
+      console.log(chalk.yellow(' 編譯完成'))
+      console.log(chalk.yellow('編譯用時：' + time + '秒'))
+    })
+  }
+  beginCompile() {
+    const lineSlog = slog.stdout
+    let text = '開始編譯：'
+    /* 記錄開始時間 */
+    this.starTime = new Date().getTime()
+    this.timer = setInterval(() => {
+      text += '█'
+      lineSlog(chalk.green(text))
+    }, 50)
+  }
 }
 
 module.exports = ConsolegPlugin
 ```
 
-{% asset_img g3.png g3 %}
-[我們可以加上cacheDirectory的選項來cache之前編譯過的檔案，來避免每次都要全部重新編譯](https://webpack.docschina.org/loaders/babel-loader#babel-loader-is-slow)
+![React Router](/images/post/legacy-project-optimization/g3.png)
+[我們可以加上 cacheDirectory 的選項來 cache 之前編譯過的檔案，來避免每次都要全部重新編譯](https://webpack.docschina.org/loaders/babel-loader#babel-loader-is-slow)
 
-接下來我們使用[HappyPack](https://github.com/amireh/happypack#readme)搭配[babel-loader](https://webpack.docschina.org/loaders/babel-loader)的cache來加速
+接下來我們使用[HappyPack](https://github.com/amireh/happypack#readme)搭配[babel-loader](https://webpack.docschina.org/loaders/babel-loader)的 cache 來加速
 
-### Vue2版本(webpack)
+### Vue2 版本(webpack)
 
 ```js
 // vue.config.js
@@ -118,7 +118,7 @@ module.exports = {
       new ConsolelogPlugin()
     ]
 
-    chainWebpack(config) { 
+    chainWebpack(config) {
         // ...
         // 只想在 development 的環境執行
         config.when(process.env.NODE_ENV === 'development', config => {
@@ -172,7 +172,7 @@ module.exports = {
             //         },
             //     }
             // },
-            
+
             //改為
             {
                 test: /\.js?$/,
@@ -198,11 +198,11 @@ module.exports = {
 
 ### 結果
 
-{% asset_img g2.png g2 %}
+![React Router](/images/post/legacy-project-optimization/g2.png)
 
-原本約55秒
-改進後約16秒
-只剩下原本不到1/3的時間
+原本約 55 秒
+改進後約 16 秒
+只剩下原本不到 1/3 的時間
 
 當然修改後儲存的編譯時間也有變快
 但我這邊就不做記錄了

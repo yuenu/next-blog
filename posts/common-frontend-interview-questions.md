@@ -4,7 +4,7 @@ date: '2023-01-18'
 tags: interview interview-questions frontend-interview
 ---
 
-![coding-interview](/images/post/common-frontend-interview-questions/coding.jpg)
+![coding-interview](/images/post/common-frontend-interview-questions/interview.jpg)
 
 > 相關函式的詳細解釋這邊就不做特別說明，這篇只專注在 code 的部分
 
