@@ -1,10 +1,13 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Fira_Sans } from 'next/font/google'
 import { Providers } from './providers'
 import { Header, Footer } from '@/components'
 import clsx from 'clsx'
 
-const inter = Inter({ subsets: ['latin'] })
+const firaSans = Fira_Sans({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['greek'],
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -17,11 +20,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="zh-TW">
+    <html lang="zh-TW" suppressHydrationWarning>
       <title>Josh&apos;s blog</title>
       <body
-        className={clsx(inter.className, 'min-h-screen')}
-        suppressHydrationWarning>
+        className={clsx(
+          firaSans.className,
+          'min-h-screen flex flex-col'
+        )}>
         <Providers>
           <Header />
           {children}

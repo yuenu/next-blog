@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import Markdown from 'markdown-to-jsx'
 import { getPostMetadata } from '@/utils'
 import matter from 'gray-matter'
+import { Main } from '@/layout'
 
 type IPageProps = {
   params: { slug: string }
@@ -28,12 +29,12 @@ const PostPage = (props: IPageProps) => {
   const slug = props.params.slug
   const post = getPageContent(slug)
   return (
-    <div>
+    <Main>
       <h1>This is a post: {slug}</h1>
       <article className="prose lg:prose-xl">
         <Markdown>{post.content}</Markdown>
       </article>
-    </div>
+    </Main>
   )
 }
 

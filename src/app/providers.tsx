@@ -8,7 +8,7 @@ type IProps = {
 
 export function Providers({ children }: IProps) {
   return (
-    <ThemeProvider attribute="class" enableSystem={true}>
+    <ThemeProvider attribute="class" defaultTheme="system">
       {children}
     </ThemeProvider>
   )

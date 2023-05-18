@@ -29,5 +29,10 @@
     "@tailwindcss/typography": "^0.5.9",
     "clsx": "^1.2.1",
     "gray-matter": "^4.0.3"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }

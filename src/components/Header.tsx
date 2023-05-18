@@ -6,7 +6,7 @@ export const Header = ({ ...rest }) => {
     <header {...rest}>
       <div className="flex justify-between p-6">
         <Link href="/">
-          <h1>Josh&apos;s blog</h1>
+          <h1 className="text-2xl font-bold">Josh Hsu</h1>
         </Link>
         <div>
           <ThemeSwitch />
