@@ -1,18 +1,17 @@
 ---
-title: webpack在舊專案中如何優化DX(Development Experience)?讓啟動server跟hot reload重新編譯的時間減少超過一半以上的時間
+title: 我配置了webpack的設置，讓編譯的時間減少超過一半以上的時間
 date: '2023-01-06'
-tags: 優化 vue2 react webpack
+tags: '優化 vue2 react webpack'
 ---
 
 ![React Router](/images/post/legacy-project-optimization/g1.png)
 
 最近公司內部的專案在開發 run server 時，花費的時間越來越久
 
-主要是用 vue2 搭配 element-ui 然後還有許多大大小小的套件，
-這個專案主要是做報表系統，有 50+以上的頁面，
-所以相對應的 component 也不少
-再配合上 webpack + babel 的編譯，
-所以不光是起 server 連同編輯檔案後儲存重新編譯的時間也花上不少
+專案 vue2 搭配 element-ui 然後還有許多大大小小的套件，這個專案主要是做報表系統，有 50+以上的頁面，
+
+相對應的 component 也好幾百個，再配合上 webpack + babel 的編譯，
+所以光是起 server 就花的將近 55 秒的時間
 
 ```bash
 // 此專案主要用的library && framework

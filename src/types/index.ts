@@ -3,4 +3,5 @@ export type PostMetadata = {
   date: string
   subtitle: string
   slug: string
+  hide?: boolean
 }

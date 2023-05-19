@@ -1,11 +1,10 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { useTheme } from 'next-themes'
 import { uppercaseFirstLetter } from '@/utils'
 
-export const ThemeSwitch = () => {
+const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
 
@@ -14,7 +13,20 @@ export const ThemeSwitch = () => {
   }, [])
 
   if (!mounted) {
-    return null
+    return (
+      <div>
+        <button
+          className={clsx(
+            'flex flex-col px-3 py-1 border-2 border-gray-400 rounded-lg',
+            'dark:border-amber-500'
+          )}
+          onClick={() =>
+            setTheme(theme === 'light' ? 'dark' : 'light')
+          }>
+          {uppercaseFirstLetter('Loading...')}
+        </button>
+      </div>
+    )
   }
 
   return (
@@ -22,13 +34,15 @@ export const ThemeSwitch = () => {
       <button
         className={clsx(
           'flex flex-col px-3 py-1 border-2 border-gray-400 rounded-lg',
-          'dark:border-x-amber-500'
+          'dark:border-amber-500'
         )}
         onClick={() =>
           setTheme(theme === 'light' ? 'dark' : 'light')
         }>
-        {uppercaseFirstLetter(theme)}
+        {uppercaseFirstLetter(theme || 'Loading...')}
       </button>
     </div>
   )
 }
+
+export default ThemeSwitch

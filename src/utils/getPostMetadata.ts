@@ -20,6 +20,7 @@ export const getPostMetadata = (): PostMetadata[] => {
       title: matterResult.data.title,
       date: matterResult.data.date,
       subtitle: matterResult.data.subtitle,
+      hide: matterResult.data.hide,
       slug: fileName.replace('.md', ''),
     }
   })

@@ -3,6 +3,7 @@ import { Fira_Sans } from 'next/font/google'
 import { Providers } from './providers'
 import { Header, Footer } from '@/components'
 import clsx from 'clsx'
+import ProgressBar from '@/components/ProgressBar'
 
 const firaSans = Fira_Sans({
   weight: ['300', '400', '500', '700'],
@@ -25,10 +26,11 @@ export default function RootLayout({
       <body
         className={clsx(
           firaSans.className,
-          'min-h-screen flex flex-col'
+          'min-h-screen flex flex-col bg-gray-100 dark:bg-slate-900'
         )}>
         <Providers>
           <Header />
+          <ProgressBar />
           {children}
           <Footer />
         </Providers>
