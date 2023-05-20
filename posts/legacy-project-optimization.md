@@ -25,9 +25,9 @@ tags: '優化 vue2 react webpack'
 
 > 這邊專注的是 DX(Development Experience)優化，並不是頁面的優化
 
-### 為此我們要先寫一個 webpack plugin 來看啟動時間要耗時多久
+### 我們先寫一個 webpack plugin 來看啟動時間要耗時多久
 
-如此一來我們才能量化所需的時間(~我們的績效 😎~)
+如此一來我們才能量化所需的時(~~績~~)間(~~效~~)
 
 先創建一個 ConsolelogPlugin.js，放在根目錄
 

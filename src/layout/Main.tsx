@@ -8,7 +8,8 @@ type Props = {
 
 export const Main = ({ className, children }: Props) => {
   return (
-    <main className={clsx('max-w-3xl mx-auto mt-10', className)}>
+    <main
+      className={clsx('max-w-3xl mx-auto my-10 w-full', className)}>
       {children}
     </main>
   )

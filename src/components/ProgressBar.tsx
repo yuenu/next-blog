@@ -1,5 +1,4 @@
 'use client'
-import 'nprogress/nprogress.css'
 import { useEffect } from 'react'
 import NProgress from 'nprogress'
 
@@ -10,7 +9,7 @@ type PushStateInput = [
 ]
 
 export default function ProgressBar() {
-  const height = '3px'
+  const height = '4px'
   const color = '#ef233c'
 
   const styles = (

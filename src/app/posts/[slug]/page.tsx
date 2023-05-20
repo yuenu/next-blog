@@ -4,9 +4,10 @@ import Markdown from 'markdown-to-jsx'
 import { getPostMetadata } from '@/utils'
 import matter from 'gray-matter'
 import { Main } from '@/layout'
+import HeightLight from '@/components/HeightLight'
 
 type IPageProps = {
-  params: { slug: string }
+  params: { slug: string; title: string }
   searchParams: Record<string, string | undefined>
 }
 
@@ -22,16 +23,24 @@ export const generateStaticParams = async () => {
   const posts = getPostMetadata()
   return posts.map((post) => ({
     slug: post.slug,
+    title: post.title,
   }))
 }
 
 const PostPage = (props: IPageProps) => {
   const slug = props.params.slug
   const post = getPageContent(slug)
+
   return (
-    <Main>
-      <h1>This is a post: {slug}</h1>
-      <article className="prose lg:prose-xl">
+    <Main className="post-details">
+      <HeightLight />
+      <h1 className="mb-2 text-3xl font-semibold">
+        {post.data.title}
+      </h1>
+      <div className="mb-4">
+        <time dateTime={post.data.date}>{post.data.date}</time>
+      </div>
+      <article className="post-content">
         <Markdown>{post.content}</Markdown>
       </article>
     </Main>

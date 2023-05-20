@@ -1,12 +1,12 @@
-import './globals.css'
-import { Fira_Sans } from 'next/font/google'
+import '@/assets/styles/globals.css'
+import { Source_Code_Pro } from 'next/font/google'
 import { Providers } from './providers'
 import { Header, Footer } from '@/components'
 import clsx from 'clsx'
 import ProgressBar from '@/components/ProgressBar'
 
-const firaSans = Fira_Sans({
-  weight: ['300', '400', '500', '700'],
+const sourceCodePro = Source_Code_Pro({
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
   subsets: ['greek'],
 })
 
@@ -25,7 +25,7 @@ export default function RootLayout({
       <title>Josh&apos;s blog</title>
       <body
         className={clsx(
-          firaSans.className,
+          sourceCodePro.className,
           'min-h-screen flex flex-col bg-gray-100 dark:bg-slate-900'
         )}>
         <Providers>

@@ -13,7 +13,6 @@ export const PostPreview = (post: PostMetadata) => {
         )}>
         <h2>{post.title}</h2>
       </Link>
-      <p>{post.subtitle}</p>
       <p>{post.date}</p>
     </div>
   )
