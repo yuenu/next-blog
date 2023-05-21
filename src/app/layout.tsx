@@ -6,6 +6,7 @@ import { Providers } from './providers'
 import { Header, Footer } from '@/components'
 import ProgressBar from '@/components/ProgressBar'
 import Script from 'next/script'
+import Head from 'next/head'
 
 const sourceCodePro = Source_Code_Pro({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -14,7 +15,9 @@ const sourceCodePro = Source_Code_Pro({
 
 export const metadata: Metadata = {
   title: 'Josh Hsu',
-  description: '分享各種前端技術，React、Redux、Vue',
+  description:
+    '分享各種前端技術，React、Redux、Vue，前端工程師的各種生活',
+  keywords: ['react', 'vue', 'webpack', '前端工程師'],
   authors: {
     name: 'Josh Hsu',
     url: 'https://www.josh-hsu.com/',
@@ -31,6 +34,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-TW" suppressHydrationWarning>
+      <Head>
+        <link
+          rel="icon"
+          href="/icon?<generated>"
+          type="image/png"
+          sizes="32x32"
+        />
+      </Head>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-MJE37S0CFV"
         strategy="afterInteractive"
