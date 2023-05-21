@@ -5,21 +5,15 @@ import { getPostMetadata } from '@/utils'
 import matter from 'gray-matter'
 import { Main } from '@/layout'
 import HeightLight from '@/components/HeightLight'
-import Head from 'next/head'
 import { Metadata, ResolvingMetadata } from 'next'
+import Image from 'next/image'
 
 export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent?: ResolvingMetadata
+  props: Props,
+  _parent?: ResolvingMetadata
 ): Promise<Metadata> {
-  // read route params
-  const slug = params.slug
-
-  // fetch data
+  const slug = props.params.slug
   const post = getPageContent(slug)
-
-  // optionally access and extend (rather than replace) parent metadata
-
   return {
     title: post.data.title + ' | Josh Hsu',
   }
@@ -42,7 +36,6 @@ export const generateStaticParams = async () => {
   const posts = getPostMetadata()
   return posts.map((post) => ({
     slug: post.slug,
-    title: post.title,
   }))
 }
 
@@ -52,22 +45,31 @@ const PostPage = (props: Props) => {
 
   return (
     <>
-      <Head>
-        <meta property="og:image" content="<generated>" />
-        <meta property="og:image:type" content="<generated>" />
-        <meta property="og:image:width" content="<generated>" />
-        <meta property="og:image:height" content="<generated>" />
-      </Head>
       <Main className="post-details">
         <HeightLight />
-        <h1 className="mb-2 text-3xl font-semibold">
+        <h1 className="mb-3 text-3xl font-semibold">
           {post.data.title}
         </h1>
         <div className="mb-4">
           <time dateTime={post.data.date}>{post.data.date}</time>
         </div>
+        <p className="mb-10 opacity-70">{post.data.subtitle}</p>
         <article className="post-content">
-          <Markdown>{post.content}</Markdown>
+          <Markdown
+            options={{
+              overrides: {
+                img: {
+                  component: Image,
+                  props: {
+                    width: 786,
+                    height: 500,
+                    class: 'w-full object-cover',
+                  },
+                },
+              },
+            }}>
+            {post.content}
+          </Markdown>
         </article>
       </Main>
     </>

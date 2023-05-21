@@ -9,7 +9,7 @@ export const PostPreview = (post: PostMetadata) => {
       className={clsx(
         'aLink group',
         'px-4 mb-4 py-7 block',
-        'border-2 hover:border-orange-400 border-transparent rounded-lg'
+        'border-2 hover:border-orange-400 border-transparent rounded-lg space-y-4'
       )}>
       <div className="flex justify-between">
         <h2 className="text-xl group-hover:text-orange-400">
@@ -19,6 +19,7 @@ export const PostPreview = (post: PostMetadata) => {
           {post.date}
         </span>
       </div>
+      <div className="opacity-70">{post.subtitle}</div>
     </Link>
   )
 }

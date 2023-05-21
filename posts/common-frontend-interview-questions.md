@@ -1,13 +1,11 @@
 ---
 title: 常見的前端面試手寫考題，deepClone、debounce、throttle
+subtitle: '大陸面試題常考的八股文題目'
 date: '2023-01-18'
 tags: interview interview-questions frontend-interview
-intro: '在看一些大陸面試題常考的八股文題目，'
 ---
 
 ![coding-interview](/images/post/common-frontend-interview-questions/interview.jpg)
-
-在看一些大陸面試題常考的八股文題目，
 
 > 相關函式的詳細解釋這邊就不做特別說明，這篇只專注在 code 的部分
 

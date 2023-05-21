@@ -33,6 +33,7 @@ pre {
   color: var(--color-heading);
   font-size: 15px;
   width: 100%;
+  position: relative;
 }
 
 .post-details a:not(.nonstyle) {
@@ -137,4 +138,8 @@ pre {
 .post-details .post-content table {
   margin: 1em 0;
   width: 100%;
+}
+
+.post-details img {
+  max-width: 100%;
 }

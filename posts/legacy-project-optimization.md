@@ -1,5 +1,6 @@
 ---
-title: 我配置了webpack的設置，讓編譯的時間減少超過一半以上的時間213123123
+title: 我配置了webpack的設置，讓編譯的時間減少超過一半以上的時間
+subtitle: Run server要花55秒左右，save recomplie 要花24秒左右
 date: '2023-01-06'
 tags: '優化 vue2 react webpack'
 ---
