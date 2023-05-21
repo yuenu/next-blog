@@ -3,15 +3,21 @@ import { useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import hljs from 'highlight.js'
 import javascript from 'highlight.js/lib/languages/javascript'
+import bash from 'highlight.js/lib/languages/bash'
+
 hljs.registerLanguage('javascript', javascript)
+hljs.registerLanguage('basg', bash)
+hljs.configure({
+  ignoreUnescapedHTML: true,
+})
 
 export default function HeightLight() {
   const { theme } = useTheme()
   useEffect(() => {
-    hljs.initHighlighting()
-    document.querySelectorAll('pre code').forEach((el) => {
-      hljs.highlightElement(el as HTMLElement)
-    })
+    hljs.highlightAll()
+    // document.querySelectorAll('pre code').forEach((el) => {
+    //   hljs.highlightElement(el as HTMLElement)
+    // })
   }, [])
 
   if (theme === 'light') {
@@ -29,26 +35,6 @@ function DarkTheme() {
   return (
     <style jsx global>
       {`
-        /*
-
-       Atom One Dark by Daniel Gamage
-       Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
-       
-       base:    #282c34
-       mono-1:  #abb2bf
-       mono-2:  #818896
-       mono-3:  #5c6370
-       hue-1:   #56b6c2
-       hue-2:   #61aeee
-       hue-3:   #c678dd
-       hue-4:   #98c379
-       hue-5:   #e06c75
-       hue-5-2: #be5046
-       hue-6:   #d19a66
-       hue-6-2: #e6c07b
-       
-       */
-
         .hljs {
           color: #abb2bf;
           background: #282c34;
@@ -132,26 +118,6 @@ function LightTheme() {
   return (
     <style jsx global>
       {`
-        /*
-
-        Atom One Light by Daniel Gamage
-        Original One Light Syntax theme from https://github.com/atom/one-light-syntax
-
-        base:    #fafafa
-        mono-1:  #383a42
-        mono-2:  #686b77
-        mono-3:  #a0a1a7
-        hue-1:   #0184bb
-        hue-2:   #4078f2
-        hue-3:   #a626a4
-        hue-4:   #50a14f
-        hue-5:   #e45649
-        hue-5-2: #c91243
-        hue-6:   #986801
-        hue-6-2: #c18401
-
-        */
-
         .hljs {
           color: #383a42;
           background: #fafafa;
