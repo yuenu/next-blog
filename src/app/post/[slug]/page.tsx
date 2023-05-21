@@ -5,12 +5,11 @@ import { getPostMetadata } from '@/utils'
 import matter from 'gray-matter'
 import { Main } from '@/layout'
 import HeightLight from '@/components/HeightLight'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 import Image from 'next/image'
 
 export async function generateMetadata(
-  props: Props,
-  _parent?: ResolvingMetadata
+  props: Props
 ): Promise<Metadata> {
   const slug = props.params.slug
   const post = getPageContent(slug)
