@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: 'Josh Hsu',
   description:
     '分享各種前端技術，React、Redux、Vue，前端工程師的各種生活',
-  keywords: ['react', 'vue', 'webpack', '前端工程師'],
+  keywords: ['Javascript', 'React', 'Vue', 'Webpack', '前端工程師'],
   authors: {
     name: 'Josh Hsu',
     url: 'https://www.josh-hsu.com/',

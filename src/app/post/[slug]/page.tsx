@@ -5,10 +5,29 @@ import { getPostMetadata } from '@/utils'
 import matter from 'gray-matter'
 import { Main } from '@/layout'
 import HeightLight from '@/components/HeightLight'
+import Head from 'next/head'
+import { Metadata, ResolvingMetadata } from 'next'
 
-type IPageProps = {
-  params: { slug: string; title: string }
-  searchParams: Record<string, string | undefined>
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = params.slug
+
+  // fetch data
+  const post = getPageContent(slug)
+
+  // optionally access and extend (rather than replace) parent metadata
+
+  return {
+    title: post.data.title + ' | Josh Hsu',
+  }
+}
+
+type Props = {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
 const getPageContent = (slug: string) => {
@@ -27,23 +46,31 @@ export const generateStaticParams = async () => {
   }))
 }
 
-const PostPage = (props: IPageProps) => {
+const PostPage = (props: Props) => {
   const slug = props.params.slug
   const post = getPageContent(slug)
 
   return (
-    <Main className="post-details">
-      <HeightLight />
-      <h1 className="mb-2 text-3xl font-semibold">
-        {post.data.title}
-      </h1>
-      <div className="mb-4">
-        <time dateTime={post.data.date}>{post.data.date}</time>
-      </div>
-      <article className="post-content">
-        <Markdown>{post.content}</Markdown>
-      </article>
-    </Main>
+    <>
+      <Head>
+        <meta property="og:image" content="<generated>" />
+        <meta property="og:image:type" content="<generated>" />
+        <meta property="og:image:width" content="<generated>" />
+        <meta property="og:image:height" content="<generated>" />
+      </Head>
+      <Main className="post-details">
+        <HeightLight />
+        <h1 className="mb-2 text-3xl font-semibold">
+          {post.data.title}
+        </h1>
+        <div className="mb-4">
+          <time dateTime={post.data.date}>{post.data.date}</time>
+        </div>
+        <article className="post-content">
+          <Markdown>{post.content}</Markdown>
+        </article>
+      </Main>
+    </>
   )
 }
 
