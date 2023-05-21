@@ -6,7 +6,7 @@ export const PostPreview = (post: PostMetadata) => {
   return (
     <div className="px-4 mb-4 border-2 border-gray-500 py-7">
       <Link
-        href={`/posts/${post.slug}`}
+        href={`/post/${post.slug}`}
         className={clsx(
           'text-2xl underline underline-offset-2',
           'hover:text-indigo-700'

@@ -9,7 +9,7 @@ type PushStateInput = [
 ]
 
 export default function ProgressBar() {
-  const height = '4px'
+  const height = '3px'
   const color = '#ef233c'
 
   const styles = (
