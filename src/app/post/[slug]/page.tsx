@@ -63,7 +63,7 @@ const PostPage = (props: Props) => {
                   props: {
                     width: 786,
                     height: 500,
-                    class: 'w-full object-cover',
+                    className: 'w-full object-cover',
                   },
                 },
               },
