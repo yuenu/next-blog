@@ -10,7 +10,7 @@ type PushStateInput = [
 
 export default function ProgressBar() {
   const height = '3px'
-  const color = '#ef233c'
+  const color = '#fb923c'
 
   const styles = (
     <style>
@@ -59,7 +59,9 @@ export default function ProgressBar() {
     }
 
     const handleMutation: MutationCallback = () => {
-      const anchorElements = document.querySelectorAll('a')
+      const anchorElements = document.querySelectorAll(
+        '.aLink'
+      ) as NodeListOf<HTMLAnchorElement>
       anchorElements.forEach((anchor) =>
         anchor.addEventListener('click', handleAnchorClick)
       )

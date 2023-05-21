@@ -35,12 +35,8 @@ const ThemeSwitch = () => {
   return (
     <div>
       <button
-        className={clsx(
-          'flex items-center',
-          'hover:text-orange-400'
-          // 'flex flex-col px-3 py-1 border-2 border-gray-400 rounded-lg',
-          // 'dark:border-amber-500'
-        )}
+        aria-label="language switch"
+        className={clsx('flex items-center', 'hover:text-orange-400')}
         onClick={() =>
           setTheme(theme === 'light' ? 'dark' : 'light')
         }>

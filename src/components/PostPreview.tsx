@@ -4,16 +4,21 @@ import { PostMetadata } from '@/types'
 
 export const PostPreview = (post: PostMetadata) => {
   return (
-    <div className="px-4 mb-4 border-2 border-gray-500 py-7">
-      <Link
-        href={`/post/${post.slug}`}
-        className={clsx(
-          'text-2xl underline underline-offset-2',
-          'hover:text-indigo-700'
-        )}>
-        <h2>{post.title}</h2>
-      </Link>
-      <p>{post.date}</p>
-    </div>
+    <Link
+      href={`/post/${post.slug}`}
+      className={clsx(
+        'aLink group',
+        'px-4 mb-4 py-7 block',
+        'border-2 hover:border-orange-400 border-transparent rounded-lg'
+      )}>
+      <div className="flex justify-between">
+        <h2 className="text-xl group-hover:text-orange-400">
+          {post.title}
+        </h2>
+        <span className="text-gray-400 whitespace-nowrap">
+          {post.date}
+        </span>
+      </div>
+    </Link>
   )
 }

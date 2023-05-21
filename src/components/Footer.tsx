@@ -9,7 +9,8 @@ export const Footer = ({ ...rest }) => {
             href="https://github.com/yuenu"
             className={clsx(
               'text-stone-900 underline underline-offset-2',
-              'dark:text-gray-50'
+              'dark:text-gray-50 dark:hover:text-orange-400',
+              'hover:text-orange-400'
             )}>
             Josh Hsu
           </a>

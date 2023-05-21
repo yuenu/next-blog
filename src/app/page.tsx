@@ -21,12 +21,13 @@ function Info() {
           'sm:flex-auto'
         )}>
         <Link
-          href="/blog"
+          href="/posts"
           className={clsx(
+            'aLink',
             'flex items-center gap-2 px-4 py-2 bg-orange-400 border-2 border-orange-400 rounded-lg text-white',
             'w-full sm:w-auto'
           )}>
-          <BookOpen /> Read my blog
+          <BookOpen /> Read my posts
         </Link>
         <a
           target="_blank"
@@ -91,6 +92,7 @@ export default function Home() {
                 <Link
                   href={`/post/${post.slug}`}
                   className={clsx(
+                    'aLink',
                     'decoration-2 underline-offset-4',
                     'hover:text-orange-400 hover:underline'
                   )}>
@@ -118,7 +120,7 @@ export default function Home() {
             <a
               target="_blank"
               rel="noopener"
-              href="https://github.com/yuenu/recipe-next"
+              href="https://recipe-next-yuenu.vercel.app/"
               title="Recipe next"
               className="underline decoration-2 underline-offset-4 hover:decoration-orange-400">
               Recipe next
