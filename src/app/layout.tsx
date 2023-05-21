@@ -5,6 +5,7 @@ import { Source_Code_Pro } from 'next/font/google'
 import { Providers } from './providers'
 import { Header, Footer } from '@/components'
 import ProgressBar from '@/components/ProgressBar'
+import Script from 'next/script'
 
 const sourceCodePro = Source_Code_Pro({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -13,13 +14,13 @@ const sourceCodePro = Source_Code_Pro({
 
 export const metadata: Metadata = {
   title: 'Josh Hsu',
-  description: '',
+  description: '分享各種前端技術，React、Redux、Vue',
   authors: {
     name: 'Josh Hsu',
-    url: '',
+    url: 'https://www.josh-hsu.com/',
   },
   verification: {
-    google: '',
+    google: 'KZBb0S0rhul6XzJAVOnwGLIjaMU90vfBR5-cdW5Y0iQ',
   },
 }
 
@@ -30,6 +31,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-TW" suppressHydrationWarning>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-MJE37S0CFV"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-MJE37S0CFV');
+        `}
+      </Script>
       <body
         className={clsx(
           sourceCodePro.className,
