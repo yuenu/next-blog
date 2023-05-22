@@ -46,13 +46,15 @@ const PostPage = (props: Props) => {
     <>
       <Main className="post-details">
         <HeightLight />
-        <h1 className="mb-3 text-3xl font-semibold">
+        <h1 className="mb-3 text-3xl font-semibold post-title">
           {post.data.title}
         </h1>
         <div className="mb-4">
           <time dateTime={post.data.date}>{post.data.date}</time>
         </div>
-        <p className="mb-10 opacity-70">{post.data.subtitle}</p>
+        <p className="mb-10 italic opacity-70">
+          {post.data.subtitle}
+        </p>
         <article className="post-content">
           <Markdown
             options={{
@@ -63,6 +65,11 @@ const PostPage = (props: Props) => {
                     width: 786,
                     height: 500,
                     className: 'w-full object-cover',
+                  },
+                },
+                ul: {
+                  props: {
+                    className: 'space-y-2',
                   },
                 },
               },

@@ -9,13 +9,13 @@ tags: '優化 vue2 react webpack'
 
 最近公司內部的專案在開發 run server 時，花費的時間越來越久
 
-專案 vue2 搭配 element-ui 然後還有許多大大小小的套件，這個專案主要是做報表系統，有 50+以上的頁面，
+專案 vue2 搭配 element-ui 然後還有許多大大小小的套件，這個專案主要是做報表系統，有 `50+`以上的頁面，
 
 相對應的 component 也好幾百個，再配合上 webpack + babel 的編譯，
 所以光是起 server 就花的將近 55 秒的時間
 
 ```bash
-// 此專案主要用的library && framework
+// Usage library && framework
 "vue": "2.6.10",
 "@vue/cli-service": "3.5.3",
 "element-ui": "2.13.0",
@@ -26,11 +26,11 @@ tags: '優化 vue2 react webpack'
 
 > 這邊專注的是 DX(Development Experience)優化，並不是頁面的優化
 
-### 我們先寫一個 webpack plugin 來看啟動時間要耗時多久
+## 我們先寫一個 webpack plugin 來看啟動時間要耗時多久
 
 如此一來我們才能量化所需的時(~~績~~)間(~~效~~)
 
-先創建一個 ConsolelogPlugin.js，放在根目錄
+先創建一個 ConsolelogPlugin.js，放在 root folder
 
 需要的 library
 
@@ -90,12 +90,22 @@ class ConsolegPlugin {
 module.exports = ConsolegPlugin
 ```
 
-![React Router](/images/post/legacy-project-optimization/g3.png)
-[我們可以加上 cacheDirectory 的選項來 cache 之前編譯過的檔案，來避免每次都要全部重新編譯](https://webpack.docschina.org/loaders/babel-loader#babel-loader-is-slow)
+已經能測量出所耗時的時間後，接下來進入主題
 
-接下來我們使用[HappyPack](https://github.com/amireh/happypack#readme)搭配[babel-loader](https://webpack.docschina.org/loaders/babel-loader)的 cache 來加速
+## 利用 緩存 loader 的執行結果 + 利用多核心 CPU 的效能加速
 
-### Vue2 版本(webpack)
+### 緩存 loader 的執行結果
+
+![webpack babel setting](/images/post/legacy-project-optimization/g3.png)
+[Source](https://webpack.docschina.org/loaders/babel-loader#babel-loader-is-slow)
+
+我們可以加上 cacheDirectory 的選項來 cache 之前編譯過的檔案，減少 webpack 構建時 Babel 重新編譯過程
+
+### 利用多核心 CPU 的效能加速
+
+接下來我們使用[HappyPack](https://github.com/amireh/happypack#readme)搭配 babel-loader 的 cache 來加速
+
+### Vue2 cli 版本(Webpack)
 
 ```js
 // vue.config.js
@@ -187,7 +197,7 @@ module.exports = {
         //.... ,
         // .... ,
         new HappyPack({
-            id:'babel', // 這邊對應
+            id:'babel', // 這邊對應上面use的id
             loaders:['babel-loader?cacheDirectory=true'], // cache babel編譯過的檔案
             threadPool: happyThreadPool
         }),
@@ -196,7 +206,7 @@ module.exports = {
 }
 ```
 
-### 結果
+## 結論
 
 ![React Router](/images/post/legacy-project-optimization/g2.png)
 
@@ -206,3 +216,8 @@ module.exports = {
 
 當然修改後儲存的編譯時間也有變快
 但我這邊就不做記錄了
+
+## Ref
+
+- [HappyPack 介紹](https://ithelp.ithome.com.tw/articles/10203713)
+- [webpack4.0 打包优化策略(一)](https://juejin.cn/post/6844903584933347335)

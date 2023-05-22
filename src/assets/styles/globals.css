@@ -6,7 +6,8 @@
   --background: white;
   --foreground: black;
   --color-background: #fafafa;
-  --color-heading: #222;
+  --color-post-heading: #000;
+  --color-post-text: #222;
   --color-text: #555;
 }
 
@@ -14,7 +15,8 @@
   --background: black;
   --foreground: white;
   --color-background: #282c34;
-  --color-heading: #c9d1d9;
+  --color-post-heading: #eee;
+  --color-post-text: #c9d1d9;
   --color-text: #555;
 }
 
@@ -26,11 +28,12 @@ pre {
   padding: 1.5rem;
   overflow-x: auto;
   margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 /* Markdown */
 .post-details {
-  color: var(--color-heading);
+  color: var(--color-post-text);
   font-size: 15px;
   width: 100%;
   position: relative;
@@ -44,15 +47,14 @@ pre {
 .post-details a:not(.nonstyle):hover {
   box-shadow: 0 1px 0 #3a97ff;
 }
-/* .post-details .post-title {
+.post-details .post-title {
   margin-bottom: 10px;
-} */
-/* .post-details .post-title h1 {
-  color: #222;
-  font-size: 1.5em;
-  font-weight: normal;
-  margin-block: 0;
-} */
+}
+
+.post-details .post-content {
+  color: var(--color-post-heading);
+}
+
 .post-details .post-meta {
   margin-bottom: 20px;
   font-size: 14px;
@@ -68,12 +70,15 @@ pre {
   margin-top: 20px;
   margin-bottom: 15px;
   line-height: 1.2em;
+  font-weight: bold;
 }
 .post-details .post-content h1 {
   font-size: 1.4em;
 }
 .post-details .post-content h2 {
   font-size: 1.3em;
+  border-bottom: 3px solid #fb923c;
+  display: inline-block;
 }
 .post-details .post-content h3 {
   font-size: 1.2em;
@@ -103,6 +108,7 @@ pre {
   padding: 10px;
   background-color: var(--color-background);
   border-left: 7px solid #999;
+  margin-bottom: 1rem;
 }
 .post-details .post-content blockquote > p {
   margin: 0 0;
@@ -138,6 +144,11 @@ pre {
 .post-details .post-content table {
   margin: 1em 0;
   width: 100%;
+}
+
+.post-details .post-content ul {
+  list-style: initial;
+  padding-left: 30px;
 }
 
 .post-details img {

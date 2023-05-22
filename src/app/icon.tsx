@@ -26,7 +26,7 @@ export default function Icon() {
           justifyContent: 'center',
           color: 'white',
         }}>
-        J.S
+        J.H
       </div>
     ),
     // ImageResponse options

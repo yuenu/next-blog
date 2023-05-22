@@ -19,7 +19,7 @@ export const PostPreview = (post: PostMetadata) => {
           {post.date}
         </span>
       </div>
-      <div className="opacity-70">{post.subtitle}</div>
+      <div className="italic opacity-70">{post.subtitle}</div>
     </Link>
   )
 }

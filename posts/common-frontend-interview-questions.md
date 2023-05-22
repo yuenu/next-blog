@@ -13,8 +13,10 @@ tags: interview interview-questions frontend-interview
 
 請實作一個簡易版的 deepClone
 
+> (2023/5/22 更新) Web API 有一個叫做[structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone)，已經可以實現 deepClone 的功能，但是各家的瀏覽器都是近幾個版本才支援的，所以如果有舊版本瀏覽器的話，要做好兼容性。
+
 ```js
-// 最簡易，但會有什麼限制？ 為什麼這樣可以？
+// 最簡易，但要考慮會有什麼限制？ 為什麼這樣可以？
 const cloned = JSON.parse(JSON.stringify(objectToClone))
 ```
 
@@ -48,7 +50,7 @@ export function deepClone(source) {
 
 延伸問題：
 
-- 有哪些東西是 deep copy ? 、哪些是 shallow copy ?
+- 有哪些 function(filter、map、slice、splice)實作出來是 deep copy ? 、哪些是 shallow copy ?
 
 ## debounce
 
@@ -119,7 +121,7 @@ function debounce(func, wait, immediate) {
 }
 ```
 
-使用情境:
+### 使用情境
 
 - 監聽 resize 事件時，不用立即執行，只要最後停止時在做計算即可
 
@@ -151,6 +153,6 @@ function throttle(func, timeout = 250) {
 }
 ```
 
-使用情境:
+### 使用情境
 
 - 有個 button 有綁定 click 事件，若沒有 throttle 在不斷點擊按鈕，會按幾次就觸發幾次，用 throttle 可以有效限制在固定時間內只會觸發一次而已
