@@ -46,7 +46,7 @@ const PostPage = (props: Props) => {
     <>
       <Main className="post-details">
         <HeightLight />
-        <h1 className="mb-3 text-3xl font-semibold post-title">
+        <h1 className="post-title mb-3 text-3xl font-semibold">
           {post.data.title}
         </h1>
         <div className="mb-4">
@@ -65,6 +65,7 @@ const PostPage = (props: Props) => {
                     width: 786,
                     height: 500,
                     className: 'w-full object-cover',
+                    priority: false,
                   },
                 },
                 ul: {

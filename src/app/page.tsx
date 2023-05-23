@@ -8,7 +8,7 @@ import React from 'react'
 function Info() {
   return (
     <div>
-      <p className="text-[#8c8c8c] mb-1">Hi, I&apos;m </p>
+      <p className="mb-1 text-[#8c8c8c]">Hi, I&apos;m </p>
       <h1 className="mb-8 text-4xl text-orange-400">Josh Hsu</h1>
       <p>
         I am a front-end engineer, And eager to learn new web
@@ -17,14 +17,14 @@ function Info() {
       <div
         id="soical"
         className={clsx(
-          'flex items-center gap-3 my-10 flex-wrap',
+          'my-10 flex flex-wrap items-center gap-3',
           'sm:flex-auto'
         )}>
         <Link
           href="/posts"
           className={clsx(
             'aLink',
-            'flex items-center gap-2 px-4 py-2 bg-orange-400 border-2 border-orange-400 rounded-lg text-white',
+            'flex items-center gap-2 rounded-lg border-2 border-orange-400 bg-orange-400 px-4 py-2 text-white',
             'w-full sm:w-auto'
           )}>
           <BookOpen /> Read my posts
@@ -35,8 +35,8 @@ function Info() {
           href="https://github.com/yuenu"
           title="Link to my GitHub profile"
           className={clsx(
-            'flex items-center gap-2 px-4 py-2 text-orange-400 border-2 border-orange-400 rounded-lg',
-            'hover:bg-[#fb923c17] hover: dark:hover:bg-[#343434]',
+            'flex items-center gap-2 rounded-lg border-2 border-orange-400 px-4 py-2 text-orange-400',
+            'hover: hover:bg-[#fb923c17] dark:hover:bg-[#343434]',
             'flex-1 sm:flex-none'
           )}>
           <GitHub />
@@ -48,7 +48,7 @@ function Info() {
           href="https://www.linkedin.com/in/josh-hsu-yuenu/"
           title="Link to my LinkedIn profile"
           className={clsx(
-            'flex items-center gap-2 px-4 py-2 text-orange-400 border-2 border-orange-400 rounded-lg',
+            'flex items-center gap-2 rounded-lg border-2 border-orange-400 px-4 py-2 text-orange-400',
             'hover:bg-[#fb923c17] dark:hover:bg-[#343434]',
             'flex-1 sm:flex-none'
           )}>
@@ -75,13 +75,13 @@ export default function Home() {
   return (
     <Main
       className={clsx(
-        'w-full max-w-3xl mx-auto mt-10 px-4',
+        'mx-auto mt-10 w-full max-w-3xl px-4',
         'md:px-0'
       )}>
       <Info />
       <div className="my-4">
         <Heading>Posts</Heading>
-        <ul className="flex flex-col gap-4 pl-5 my-6 list-disc">
+        <ul className="my-6 flex list-disc flex-col gap-4 pl-5">
           {postMetadata
             .filter((post) => !post.hide)
             .map((post) => (
@@ -104,7 +104,7 @@ export default function Home() {
       </div>
       <div className="my-4">
         <Heading>Projects</Heading>
-        <ul className="flex flex-col gap-4 pl-5 my-6 list-disc">
+        <ul className="my-6 flex list-disc flex-col gap-4 pl-5">
           <li>
             <a
               target="_blank"

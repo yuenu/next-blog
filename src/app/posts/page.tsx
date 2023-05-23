@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   const postMetadata = getPostMetadata()
   return (
-    <Main className="w-full max-w-3xl mx-auto mt-10">
+    <Main className="mx-auto mt-10 w-full max-w-3xl">
       <div>
         {postMetadata
           .filter((post) => !post.hide)

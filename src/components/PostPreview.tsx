@@ -8,14 +8,14 @@ export const PostPreview = (post: PostMetadata) => {
       href={`/post/${post.slug}`}
       className={clsx(
         'aLink group',
-        'px-4 mb-4 py-7 block',
-        'border-2 hover:border-orange-400 border-transparent rounded-lg space-y-4'
+        'mb-4 block px-4 py-7',
+        'space-y-4 rounded-lg border-2 border-transparent hover:border-orange-400'
       )}>
       <div className="flex justify-between">
         <h2 className="text-xl group-hover:text-orange-400">
           {post.title}
         </h2>
-        <span className="text-gray-400 whitespace-nowrap">
+        <span className="whitespace-nowrap text-gray-400">
           {post.date}
         </span>
       </div>
