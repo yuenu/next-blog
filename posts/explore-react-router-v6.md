@@ -1,9 +1,10 @@
 ---
 title: React如何實現Vue的keep-alive功能？ 初探 React Router v6
 subtitle: React實現Vue的keep-alive功能
-date: '2023-01-17'
+date: 2023-01-17
+slug: explore-react-router-v6
 tags: react react-router
-hide: true
+published: false
 ---
 
 ![React Router](/images/post/explore-react-router-v6/react-router.jpeg)

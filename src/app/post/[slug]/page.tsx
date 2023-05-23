@@ -1,60 +1,75 @@
-import path from 'node:path'
-import fs from 'node:fs'
-import Markdown from 'markdown-to-jsx'
-import { getPostMetadata } from '@/utils'
-import matter from 'gray-matter'
-import { Main } from '@/layout'
-import HeightLight from '@/components/HeightLight'
+// import path from 'node:path'
+// import fs from 'node:fs'
+
 import { Metadata } from 'next'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
+import { Main } from '@/layout'
+import { allPosts } from 'contentlayer/generated'
+import matter from 'gray-matter'
+import Markdown from 'markdown-to-jsx'
 
-export async function generateMetadata(
-  props: Props
-): Promise<Metadata> {
-  const slug = props.params.slug
-  const post = getPageContent(slug)
+import { getPostMetadata } from '@/lib/post'
+import HeightLight from '@/components/HeightLight'
+
+async function getPageFromParams(props: PageProps) {
+  const slugAsParams = props.params?.slug
+  const page = allPosts.find((post) => post.slug === slugAsParams)
+
+  if (!page) {
+    null
+  }
+
+  return page
+}
+
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const page = await getPageFromParams(props)
+
+  if (!page) {
+    return {}
+  }
+
   return {
-    title: post.data.title + ' | Josh Hsu',
+    title: page.title,
   }
 }
 
-type Props = {
+type PageProps = {
   params: { slug: string }
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-const getPageContent = (slug: string) => {
-  const postsDirectory = path.join(process.cwd(), 'posts/')
-  const file = `${postsDirectory}${slug}.md`
-  const content = fs.readFileSync(file, 'utf-8')
-  const matterResult = matter(content)
-  return matterResult
-}
+// const getPageContent = (slug: string) => {
+//   const postsDirectory = path.join(process.cwd(), 'posts/')
+//   const file = `${postsDirectory}${slug}.md`
+//   const content = fs.readFileSync(file, 'utf-8')
+//   const matterResult = matter(content)
+//   return matterResult
+// }
 
 export const generateStaticParams = async () => {
-  const posts = getPostMetadata()
-  return posts.map((post) => ({
-    slug: post.slug,
+  return allPosts.map((page) => ({
+    slug: page.slug,
   }))
 }
 
-const PostPage = (props: Props) => {
-  const slug = props.params.slug
-  const post = getPageContent(slug)
+const PostPage = async (props: PageProps) => {
+  const post = await getPageFromParams(props)
+
+  if (!post) {
+    return notFound()
+  }
 
   return (
     <>
       <Main className="post-details">
         <HeightLight />
-        <h1 className="post-title mb-3 text-3xl font-semibold">
-          {post.data.title}
-        </h1>
+        <h1 className="post-title mb-3 text-3xl font-semibold">{post.title}</h1>
         <div className="mb-4">
-          <time dateTime={post.data.date}>{post.data.date}</time>
+          <time dateTime={post.date}>{post.date}</time>
         </div>
-        <p className="mb-10 italic opacity-70">
-          {post.data.subtitle}
-        </p>
+        <p className="mb-10 italic opacity-70">{post.subtitle}</p>
         <article className="post-content">
           <Markdown
             options={{
@@ -74,8 +89,9 @@ const PostPage = (props: Props) => {
                   },
                 },
               },
-            }}>
-            {post.content}
+            }}
+          >
+            {post.body.raw}
           </Markdown>
         </article>
       </Main>

@@ -1,19 +1,18 @@
-import { getPostMetadata } from '@/utils'
+import type { Metadata } from 'next'
 import { PostPreview } from '@/components'
 import { Main } from '@/layout'
-import type { Metadata } from 'next'
+import { allPosts } from 'contentlayer/generated'
 
 export const metadata: Metadata = {
   title: 'Posts | Josh Hsu',
 }
 
 export default function BlogPage() {
-  const postMetadata = getPostMetadata()
   return (
     <Main className="mx-auto mt-10 w-full max-w-3xl">
       <div>
-        {postMetadata
-          .filter((post) => !post.hide)
+        {allPosts
+          .filter((post) => post.published)
           .map((post) => (
             <PostPreview key={post.slug} {...post} />
           ))}

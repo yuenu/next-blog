@@ -1,12 +1,14 @@
 import '@/assets/styles/globals.css'
 import type { Metadata } from 'next'
-import clsx from 'clsx'
 import { Source_Code_Pro } from 'next/font/google'
-import { Providers } from './providers'
-import { Header, Footer } from '@/components'
-import ProgressBar from '@/components/ProgressBar'
-import Script from 'next/script'
 import Head from 'next/head'
+import Script from 'next/script'
+import { Footer, Header } from '@/components'
+
+import { cn } from '@/lib/utils'
+import ProgressBar from '@/components/ProgressBar'
+
+import { ThemeProvider } from './providers'
 
 const sourceCodePro = Source_Code_Pro({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -15,8 +17,7 @@ const sourceCodePro = Source_Code_Pro({
 
 export const metadata: Metadata = {
   title: 'Josh Hsu',
-  description:
-    '分享各種前端技術，React、Redux、Vue，前端工程師的各種生活',
+  description: '分享各種前端技術，React、Redux、Vue，前端工程師的各種生活',
   keywords: ['Javascript', 'React', 'Vue', 'Webpack', '前端工程師'],
   authors: {
     name: 'Josh Hsu',
@@ -56,16 +57,17 @@ export default function RootLayout({
         `}
       </Script>
       <body
-        className={clsx(
+        className={cn(
           sourceCodePro.className,
-          'min-h-screen flex flex-col bg-gray-100 dark:bg-[#121212]'
-        )}>
-        <Providers>
+          'flex min-h-screen flex-col bg-gray-100 dark:bg-[#121212]'
+        )}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
           <ProgressBar />
           {children}
           <Footer />
-        </Providers>
+        </ThemeProvider>
       </body>
     </html>
   )

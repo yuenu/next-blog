@@ -1,0 +1,11 @@
+---
+title: Sample post2
+subtitle: My first post2
+slug: sample-post2
+date: 2022-08-30
+published: false
+---
+
+## This is my first sample post2
+
+Congratulations! You have created your first post.

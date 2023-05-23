@@ -1,4 +1,4 @@
-export type PostMetadata = {
+export type Post = {
   title: string
   subtitle: string
   date: string
