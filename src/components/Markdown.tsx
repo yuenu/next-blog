@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 
 import { cn } from '@/lib/utils'
+import CustomPre from '@/components/CustomPre'
 
 const components = {
   h1: ({ className, ...rest }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -127,15 +128,18 @@ const components = {
       {...rest}
     />
   ),
-  pre: ({ className, ...rest }: React.HTMLAttributes<HTMLPreElement>) => (
-    <pre
-      className={cn(
-        'mb-4 mt-6 overflow-x-auto rounded-lg border bg-black py-4',
-        className
-      )}
-      {...rest}
-    />
-  ),
+  // pre: ({ className, ...rest }: React.HTMLAttributes<HTMLPreElement>) => {
+  //   return (
+  //     <pre
+  //       className={cn(
+  //         'mb-4 mt-6 overflow-x-auto rounded-lg border bg-black py-4',
+  //         className
+  //       )}
+  //       {...rest}
+  //     />
+  //   )
+  // },
+  pre: CustomPre,
   code: ({ className, ...rest }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
