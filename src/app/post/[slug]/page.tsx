@@ -1,15 +1,15 @@
-// import path from 'node:path'
-// import fs from 'node:fs'
-
 import { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Main } from '@/layout'
 import { allPosts } from 'contentlayer/generated'
 import { format } from 'date-fns'
-import Markdown from 'markdown-to-jsx'
+import { ArrowLeft } from 'react-feather'
 
-import HeightLight from '@/components/HeightLight'
+import '@/styles/mdx.css'
+import { cn } from '@/lib/utils'
+import { Mdx } from '@/components/Markdown'
 
 async function getPageFromParams(props: PageProps) {
   const slugAsParams = props.params?.slug
@@ -39,14 +39,6 @@ type PageProps = {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-// const getPageContent = (slug: string) => {
-//   const postsDirectory = path.join(process.cwd(), 'posts/')
-//   const file = `${postsDirectory}${slug}.md`
-//   const content = fs.readFileSync(file, 'utf-8')
-//   const matterResult = matter(content)
-//   return matterResult
-// }
-
 export const generateStaticParams = async () => {
   return allPosts.map((page) => ({
     slug: page.slug,
@@ -57,43 +49,56 @@ const PostPage = async (props: PageProps) => {
   const post = await getPageFromParams(props)
 
   if (!post) {
-    return notFound()
+    notFound()
   }
 
   const parsedDate = format(new Date(post.date), 'yyyy/MM/dd')
 
   return (
-    <Main className="post-details">
-      <HeightLight />
-      <h1 className="post-title mb-3 text-3xl font-semibold">{post.title}</h1>
-      <div className="mb-4">
-        <time dateTime={parsedDate}>{parsedDate}</time>
+    <Main className="container relative max-w-3xl py-6 lg:py-10">
+      <Link
+        href="/posts"
+        className={cn(
+          'aLink absolute left-[-200px] top-14 hidden items-center rounded-md px-4 py-2 xl:inline-flex',
+          'hover:bg-accent'
+        )}
+      >
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        See all posts
+      </Link>
+      <div>
+        {post.date && (
+          <time dateTime={post.date} className="block text-sm text-gray-400">
+            Published on {parsedDate}
+          </time>
+        )}
+        <h1 className="font-heading mt-2 inline-block text-2xl leading-tight lg:text-4xl">
+          {post.title}
+        </h1>
       </div>
-      <p className="mb-10 italic opacity-70">{post.subtitle}</p>
-      <article className="post-content">
-        <Markdown
-          options={{
-            overrides: {
-              img: {
-                component: Image,
-                props: {
-                  width: 786,
-                  height: 500,
-                  className: 'w-full object-cover',
-                  priority: false,
-                },
-              },
-              ul: {
-                props: {
-                  className: 'space-y-2',
-                },
-              },
-            },
-          }}
+      {post.image && (
+        <Image
+          src={post.image}
+          alt={post.title}
+          width={720}
+          height={405}
+          className="bg-muted my-8 rounded-md border transition-colors"
+          priority
+        />
+      )}
+      <Mdx code={post.body.code} />
+      <div className="flex justify-center py-6 lg:py-10">
+        <Link
+          href="/posts"
+          className={cn(
+            'aLink flex items-center gap-2 rounded-md px-4 py-2',
+            'hover:bg-accent'
+          )}
         >
-          {post.body.raw}
-        </Markdown>
-      </article>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          See all posts
+        </Link>
+      </div>
     </Main>
   )
 }

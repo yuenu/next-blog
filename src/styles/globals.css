@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: white;
+    --foreground: black;
+    --color-background: #fafafa;
+    --color-post-heading: #000;
+    --color-post-text: #222;
+    --color-text: #555;
+    --accent: #f1f5f9;
+  }
+
+  .dark {
+    --background: black;
+    --foreground: white;
+    --color-background: #282c34;
+    --color-post-heading: #eee;
+    --color-post-text: #c9d1d9;
+    --color-text: #555;
+    --accent: #1d283a;
+  }
+}

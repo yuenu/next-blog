@@ -1,12 +1,13 @@
 'use client'
+
 import { useEffect } from 'react'
-import { useTheme } from 'next-themes'
 import hljs from 'highlight.js'
-import javascript from 'highlight.js/lib/languages/javascript'
 import bash from 'highlight.js/lib/languages/bash'
+import javascript from 'highlight.js/lib/languages/javascript'
+import { useTheme } from 'next-themes'
 
 hljs.registerLanguage('javascript', javascript)
-hljs.registerLanguage('basg', bash)
+hljs.registerLanguage('bash', bash)
 hljs.configure({
   ignoreUnescapedHTML: true,
 })

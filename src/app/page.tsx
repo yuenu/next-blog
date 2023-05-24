@@ -73,9 +73,7 @@ function Heading(props: HeadingProps) {
 export default function Home() {
   const posts = allPosts
     .filter((post) => post.published)
-    .sort((a, b) => {
-      return compareDesc(new Date(a.date), new Date(b.date))
-    })
+    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
   return (
     <Main className={clsx('mx-auto mt-10 w-full max-w-3xl px-4', 'md:px-0')}>
       <Info />

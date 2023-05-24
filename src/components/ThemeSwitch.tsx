@@ -15,18 +15,8 @@ const ThemeSwitch = () => {
 
   if (!mounted) {
     return (
-      <div>
-        <button
-          aria-label="language switch"
-          type="button"
-          className={clsx(
-            'flex flex-col rounded-lg border-2 border-gray-400 px-3 py-1',
-            'dark:border-amber-500'
-          )}
-          onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-        >
-          Loading...
-        </button>
+      <div role="status" className="max-w-sm animate-pulse ">
+        <div className="h-6 w-6 rounded-lg bg-gray-200 dark:bg-zinc-800"></div>
       </div>
     )
   }

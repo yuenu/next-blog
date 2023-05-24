@@ -1,10 +1,11 @@
-import '@/assets/styles/globals.css'
+import '@/styles/globals.css'
 import type { Metadata } from 'next'
 import { Source_Code_Pro } from 'next/font/google'
 import Head from 'next/head'
 import Script from 'next/script'
 import { Footer, Header } from '@/components'
 
+import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
 import ProgressBar from '@/components/ProgressBar'
 
@@ -16,15 +17,23 @@ const sourceCodePro = Source_Code_Pro({
 })
 
 export const metadata: Metadata = {
-  title: 'Josh Hsu',
-  description: '分享各種前端技術，React、Redux、Vue，前端工程師的各種生活',
-  keywords: ['Javascript', 'React', 'Vue', 'Webpack', '前端工程師'],
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
   authors: {
-    name: 'Josh Hsu',
+    name: siteConfig.name,
     url: 'https://www.josh-hsu.com/',
   },
+  creator: siteConfig.name,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
   verification: {
-    google: 'KZBb0S0rhul6XzJAVOnwGLIjaMU90vfBR5-cdW5Y0iQ',
+    google: siteConfig.googleVerication,
   },
 }
 
@@ -59,7 +68,7 @@ export default function RootLayout({
       <body
         className={cn(
           sourceCodePro.className,
-          'flex min-h-screen flex-col bg-gray-100 dark:bg-[#121212]'
+          'flex min-h-screen flex-col bg-background'
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
