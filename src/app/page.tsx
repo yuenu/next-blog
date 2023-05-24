@@ -3,8 +3,10 @@ import Link from 'next/link'
 import { Main } from '@/layout'
 import clsx from 'clsx'
 import { allPosts } from 'contentlayer/generated'
-import { compareDesc, format } from 'date-fns'
+import { compareDesc } from 'date-fns'
 import { BookOpen, GitHub, Linkedin } from 'react-feather'
+
+import { formatDate } from '@/lib/utils'
 
 function Info() {
   return (
@@ -83,7 +85,7 @@ export default function Home() {
           {posts.map((post) => (
             <li key={post.slug}>
               <span className="text-sm text-gray-400">
-                {format(new Date(post.date), 'yyyy/MM/dd')}
+                {formatDate(post.date)}
               </span>{' '}
               <Link
                 href={`/post/${post.slug}`}

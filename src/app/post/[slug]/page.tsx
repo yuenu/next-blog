@@ -4,8 +4,9 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Main } from '@/layout'
 import { allPosts } from 'contentlayer/generated'
-import { format } from 'date-fns'
 import { ArrowLeft } from 'react-feather'
+
+import { formatDate } from '@/lib/utils'
 
 import '@/styles/mdx.css'
 import { cn } from '@/lib/utils'
@@ -52,8 +53,6 @@ const PostPage = async (props: PageProps) => {
     notFound()
   }
 
-  const parsedDate = format(new Date(post.date), 'yyyy/MM/dd')
-
   return (
     <Main className="container relative max-w-3xl py-6 lg:py-10">
       <Link
@@ -69,7 +68,7 @@ const PostPage = async (props: PageProps) => {
       <div>
         {post.date && (
           <time dateTime={post.date} className="block text-sm text-gray-400">
-            Published on {parsedDate}
+            Published on {formatDate(post.date)}
           </time>
         )}
         <h1 className="font-heading mt-2 inline-block text-2xl leading-tight lg:text-4xl">

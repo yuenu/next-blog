@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Main } from '@/layout'
 import { allPosts, type Post } from 'contentlayer/generated'
-import { compareDesc, format } from 'date-fns'
+import { compareDesc } from 'date-fns'
 
-import { cn } from '@/lib/utils'
+import { cn, formatDate } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Posts',
@@ -23,7 +23,7 @@ const PostPreview = (post: Post) => {
       <div className="flex justify-between">
         <h2 className="text-xl group-hover:text-orange-400">{post.title}</h2>
         <time className="whitespace-nowrap text-gray-400" dateTime={post.date}>
-          {format(new Date(post.date), 'yyyy/MM/dd')}
+          {formatDate(post.date)}
         </time>
       </div>
       <div className="italic opacity-70">{post.subtitle}</div>
