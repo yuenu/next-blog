@@ -62,6 +62,9 @@ const components = {
   ),
   a: ({ className, ...rest }: React.HTMLAttributes<HTMLAnchorElement>) => (
     <a
+      target="_blank"
+      rel="noopener"
+      title={rest.children as string}
       className={cn('font-medium underline underline-offset-4', className)}
       {...rest}
     />
