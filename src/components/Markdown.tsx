@@ -99,11 +99,32 @@ const components = {
   img: ({
     className,
     alt,
+    src,
     ...rest
-  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img className={cn('rounded-md border', className)} alt={alt} {...rest} />
-  ),
+  }: React.ImgHTMLAttributes<HTMLImageElement>) => {
+    if (src) {
+      return (
+        <Image
+          src={src}
+          className={cn('rounded-md border', className)}
+          alt={alt || 'image'}
+          width="720"
+          height="405"
+        />
+      )
+    }
+
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        className={cn('rounded-md border', className)}
+        alt={alt}
+        {...rest}
+        width="720"
+        height="405"
+      />
+    )
+  },
   hr: ({ ...rest }) => <hr className="my-4 md:my-8" {...rest} />,
   table: ({ className, ...rest }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="my-6 w-full overflow-y-auto">
@@ -152,7 +173,6 @@ const components = {
       {...rest}
     />
   ),
-  Image,
 }
 
 interface MdxProps {
