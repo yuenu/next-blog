@@ -1,14 +1,21 @@
 ---
 title: React如何在同一個Repo用拆分不同裝置的Code
-subtitle: Desktop 與 Mobile(h5)版本，使用不同的domain，也拆分了不同的專案，要如何整合在一起？
+subtitle: Desktop 與 Mobile(h5)版本，使用不同的domain，也拆分了不同的專案，要如何整合在同一個專案內？
 image: /images/post/react-resposive-code-splitting/post.jpg
 date: 2023-05-24
 slug: react-resposive-code-splitting
-tags: react/code splitting/react.lazing
+tags: react/Code-Splitting/React Lazy/React Suspense
 published: true
 ---
 
+```
+[Demo](https://react-code-splitting-example-self.vercel.app/)
+[Demo repo](https://github.com/yuenu/react-code-splitting)
+```
+
 ## 此文章適用以下情境
+
+- 沒有特別製作 RWD 的網頁，是維持兩個版本，`電腦版`、`手機版`
 
 - 電腦版與手機版用到的 API 及商業邏輯大致相同，但是卻拆分了 2 個專案，也各自上傳到不同的 Domain
 
@@ -62,7 +69,7 @@ B 專案(手機版、Mobile version)
 
 ![ithelp mobile page](/images/post/react-resposive-code-splitting/ithelp.png)
 
-> 注: 我對 SEO 相關的優化不是太了解 😓 ，之前的工作都是使用 CSR(Client side render)的框架
+> 我對 SEO 相關的優化不是太了解 😓 ，之前的工作都是使用 CSR(Client side render)的框架
 
 對於什麼是 CSR 還是 SSR 這些名詞的人，可以看這 [英文](https://web.dev/rendering-on-the-web/)、[繁體中文](https://shubo.io/rendering-patterns/)、[掘金](https://juejin.cn/post/7127426806088466446)
 
@@ -94,8 +101,7 @@ Run `npm create vite@latest` 後的 package.json
   // ...
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.11.2"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "vite": "^4.3.2"
@@ -103,7 +109,7 @@ Run `npm create vite@latest` 後的 package.json
 }
 ```
 
-加入 React-router-dom、@types/node
+接著安裝 React-router-dom 及 @types/node
 
 > React router 自從 6.4 版本後做了許多改變，也許你該看看他們的[文檔](https://reactrouter.com/) ， 但現階段不建議使用在 Prod 上面，因為近期他們小版本更新的飛快，如果要穩定一點的版本建議還是使用 v5 ，遇到問題社群上的解答也相對比較多一點。
 
@@ -111,7 +117,7 @@ Run `npm create vite@latest` 後的 package.json
 yarn add react-router-dom && yarn add -D @types/node
 ```
 
-加入後會變成
+安裝完後會變成
 
 ```json
 // package.json
@@ -181,4 +187,234 @@ module.exports = {
 
 到這邊專案的初始設定算是好了
 
+---
+
 ### 主邏輯
+
+主要是利用了[React.lazy](https://react.dev/reference/react/lazy) dynamic import 的功能，盡可能把 bundle size 壓到最小，讓用戶在初始載入的速讀提升。
+
+在搭配[react-responsive](https://github.com/yocontra/react-responsive)，判斷用戶視窗大小來載入是 Desktop 還是 Mobile 的檔案
+
+> React Suspense & React Lazy 為 16.6 以後的版本才有的功能
+
+`以下為資料夾結構`
+
+- ./src/\* ，共用的邏輯 Hooks、API、components、store、utils
+- ./src/apps/Desktop ， 電腦版的邏輯，也可以有自己的 Hooks、API
+- ./src/apps/Mobile ， 手機版的邏輯，也可以有自己的 Hooks、API
+
+```tree
+├── node_modules
+├── public
+├── src
+│   ├── apps
+│   │   │
+│   │   ├── index.tsx // 導出 Desktop & Mobile
+│   │   ├── Desktop
+│   │   │     ├── components  // 電腦版的components
+│   │   │     ├── pages // 電腦版的頁面
+│   │   │     │     ├── Home.tsx
+│   │   │     │     ├── About.tsx
+│   │   │     │     └── Prod.tsx
+│   │   │     │
+│   │   │     ├── App.tsx
+│   │   │     ├── index.tsx
+│   │   │     └── router.tsx
+│   │   │
+│   │   └──  Mobile
+│   │         ├── components // 手機版的components
+│   │         ├── pages // 手機版的頁面
+│   │         │     ├── Home.tsx
+│   │         │     ├── About.tsx
+│   │         │     └── Prod.tsx
+│   │         │
+│   │         ├── App.tsx
+│   │         ├── index.tsx
+│   │         └── router.tsx
+│   │
+│   ├── api  // 共用的 API
+│   ├── components  // 共用的 components
+│   ├── hooks  // 共用的 hooks
+│   ├── store  // 共用的 store
+│   ├── utils  // 共用的 utils
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+│
+├── .eslintrc.cjs
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+```
+
+Desktop 的 code ， Mobile 的就依樣畫葫蘆 ，若有問題請看[demo repo](https://github.com/yuenu/react-code-splitting)
+
+路徑: src/apps/Desktop/index.tsx
+
+```js
+// src/apps/Desktop/index.tsx
+import React, { Suspense } from 'react'
+
+import { LoadingSpinner } from '@/components/Loading'
+
+const App = React.lazy(() => import('./App'))
+const AsyncApp = () => {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <App />
+    </Suspense>
+  )
+}
+export default AsyncApp
+```
+
+路徑: src/apps/Desktop/router.tsx
+
+```js
+// src/apps/Desktop/router.tsx
+import { Suspense, lazy } from 'react'
+import { Route, Routes } from 'react-router-dom'
+
+const Home = lazy(() => import('./pages/Home'))
+const About = lazy(() => import('./pages/About'))
+const Product = lazy(() => import('./pages/Product'))
+
+const IRoute = () => {
+  return (
+    <Suspense>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/product" element={<Product />} />
+      </Routes>
+    </Suspense>
+  )
+}
+
+export default IRoute
+```
+
+路徑: src/apps/Desktop/App.tsx
+
+```js
+// src/apps/Desktop/App.tsx
+import { BrowserRouter, Link } from 'react-router-dom'
+
+import IRoute from './router'
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <h1>Desktop App component</h1>
+      <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
+      <Link to="/product">Product</Link>
+      <IRoute />
+    </BrowserRouter>
+  )
+}
+
+export default App
+```
+
+路徑: src/apps/Desktop/pages/About.tsx
+路徑: src/apps/Desktop/pages/Home.tsx
+路徑: src/apps/Desktop/pages/Prodcut.tsx
+
+```js
+// src/apps/Desktop/pages/About.tsx
+function About() {
+  return (
+    <div>
+      <h1>This is the Desktop About page</h1>
+    </div>
+  );
+}
+export default About;
+
+// src/apps/Desktop/pages/Home.tsx
+function Home() {
+  return (
+    <div>
+      <h1>This is the Desktop Home page</h1>
+    </div>
+  );
+}
+export default Home;
+
+// src/apps/Desktop/pages/Prodcut.tsx
+function Product() {
+  return (
+    <div>
+      <h1>This is the Desktop Product page</h1>
+    </div>
+  );
+}
+export default Product;
+```
+
+---
+
+以上就能建立起 Desktop 初始的資料結構了，接著 Mobile 也一樣做法
+接著我們利用 react-responsive 幫助我們判斷什麼時候要載入哪一個版本的 code
+
+```bash
+yarn add react-responsive
+```
+
+路徑: src/hoc/responsive.tsx
+
+```js
+// src/hoc/responsive.tsx
+import MediaQuery from 'react-responsive'
+
+const MOBILE_QUERY = '(max-width: 767px)'
+
+type ScreenProps = {
+  Mobile: React.ElementType,
+  Desktop: React.ElementType,
+}
+
+const Screen =
+  ({ Mobile, Desktop }: ScreenProps) =>
+  ({ ...rest }) =>
+    (
+      <MediaQuery query={MOBILE_QUERY}>
+        {(matches) => (matches ? <Mobile {...rest} /> : <Desktop {...rest} />)}
+      </MediaQuery>
+    )
+
+export default Screen
+```
+
+路徑: src/App.tsx
+
+```js
+import { Desktop, Mobile } from '@/apps'
+import Responsive from '@/hoc/responsive'
+
+function App() {
+  const Screen = Responsive({ Desktop, Mobile })
+  return (
+    <div>
+      <div>Root App Component</div>
+      <Screen />
+    </div>
+  )
+}
+
+export default App
+```
+
+已上就是全部了，不清楚的可以去看[dmoe](https://react-code-splitting-example-self.vercel.app/)，開 Network 去觀察
+
+![deploy to real domain to check](/images/post/react-resposive-code-splitting/test.png)
+
+## 結論
+
+利用此架構的優點是可以將共用的商業邏輯寫在一個地方共同維護就好，各自的版本可以專注於畫面上的邏輯就好。
+
+此篇的方法只是個簡單的 🌰 ， 但還有很多地方可以進行優化。 但剩下的地方就留給你們發揮啦～
