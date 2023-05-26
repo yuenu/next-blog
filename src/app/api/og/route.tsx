@@ -4,15 +4,15 @@ import { ogImageSchema } from '@/lib/validations/og'
 
 export const runtime = 'edge'
 
-// const interRegular = fetch(
-//   new URL('../../../assets/fonts/Inter-Regular.ttf', import.meta.url)
-// ).then((res) => res.arrayBuffer())
+const interRegular = fetch(
+  new URL('../../../assets/fonts/SourceCodePro-Bold.ttf', import.meta.url)
+).then((res) => res.arrayBuffer())
 
 const maxTextLength = 35
 
 export async function GET(req: Request) {
   try {
-    // const fontRegular = await interRegular
+    const fontRegular = await interRegular
 
     const url = new URL(req.url)
     const values = ogImageSchema.parse(Object.fromEntries(url.searchParams))
@@ -36,9 +36,10 @@ export async function GET(req: Request) {
               mode === 'dark'
                 ? 'linear-gradient(90deg, #000 0%, #111 100%)'
                 : 'white',
+            fontFamily: '"Source Code Pro"',
           }}
         >
-          <div tw="text-xl flex items-center justify-center w-12 h-12 font-bold rounded-full border-2 border-orange-400">
+          <div tw="text-3xl flex items-center justify-center w-12 h-12 font-bold rounded-lg border-2 border-orange-400">
             JH
           </div>
           <div tw="flex flex-col flex-1 py-10">
@@ -47,7 +48,7 @@ export async function GET(req: Request) {
             </div>
             <div style={{ fontSize }}>{values.heading}</div>
           </div>
-          <div tw="mt-auto flex justify-between w-full text-xl">
+          <div tw="mt-auto flex justify-between w-full text-3xl">
             <div>josh-hsu.com</div>
             <div tw="flex items-center">
               <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
@@ -74,14 +75,14 @@ export async function GET(req: Request) {
       {
         width: 1200,
         height: 630,
-        // fonts: [
-        //   {
-        //     name: 'Inter',
-        //     data: fontRegular,
-        //     weight: 400,
-        //     style: 'normal',
-        //   },
-        // ],
+        fonts: [
+          {
+            name: 'Source Code Pro',
+            data: fontRegular,
+            weight: 700,
+            style: 'normal',
+          },
+        ],
       }
     )
   } catch {
