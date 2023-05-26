@@ -93,7 +93,7 @@ const PostPage = async (props: PageProps) => {
             Published on {formatDate(post.date)}
           </time>
         )}
-        <h1 className="font-heading mt-2 inline-block text-2xl leading-tight lg:text-4xl">
+        <h1 className="font-heading mt-2 inline-block text-3xl leading-tight md:text-4xl">
           {post.title}
         </h1>
       </div>

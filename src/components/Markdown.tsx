@@ -3,36 +3,13 @@ import Image from 'next/image'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 
 import { cn } from '@/lib/utils'
+import { CustomH1, CustomH2, CustomH3 } from '@/components/CustomHeading'
 import CustomPre from '@/components/CustomPre'
 
 const components = {
-  h1: ({ className, ...rest }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1
-      className={cn(
-        'mt-2 scroll-m-20 text-4xl font-bold tracking-tight',
-        className
-      )}
-      {...rest}
-    />
-  ),
-  h2: ({ className, ...rest }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2
-      className={cn(
-        'mt-10 scroll-m-20 border-b-2 border-b-orange-400 pb-1 text-3xl font-semibold tracking-tight first:mt-0',
-        className
-      )}
-      {...rest}
-    />
-  ),
-  h3: ({ className, ...rest }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3
-      className={cn(
-        'mt-8 scroll-m-20 text-2xl font-semibold tracking-tight',
-        className
-      )}
-      {...rest}
-    />
-  ),
+  h1: CustomH1,
+  h2: CustomH2,
+  h3: CustomH3,
   h4: ({ className, ...rest }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h4
       className={cn(
