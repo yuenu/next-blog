@@ -6,11 +6,11 @@ import { Main } from '@/layout'
 import { allPosts } from 'contentlayer/generated'
 import { ArrowLeft } from 'react-feather'
 
-import { formatDate } from '@/lib/utils'
-
 import '@/styles/mdx.css'
-import { cn } from '@/lib/utils'
+import { absoluteUrl, cn, formatDate } from '@/lib/utils'
 import { Mdx } from '@/components/Markdown'
+
+import { env } from '../../../..//env.mjs'
 
 async function getPageFromParams(props: PageProps) {
   const slugAsParams = props.params?.slug
@@ -30,8 +30,30 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     return {}
   }
 
+  const url = env.NEXT_PUBLIC_APP_URL
+
+  const ogUrl = new URL(`${url}/api/og`)
+  ogUrl.searchParams.set('heading', page.title)
+  ogUrl.searchParams.set('type', 'Blog Post')
+  ogUrl.searchParams.set('mode', 'dark')
+
   return {
     title: page.title,
+    description: `${page.title} - ${page.subtitle}`,
+    openGraph: {
+      title: page.title,
+      description: page.subtitle,
+      type: 'article',
+      url: absoluteUrl(page.slug),
+      images: [
+        {
+          url: ogUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: page.title,
+        },
+      ],
+    },
   }
 }
 
@@ -81,7 +103,7 @@ const PostPage = async (props: PageProps) => {
           alt={post.title}
           width={720}
           height={405}
-          className="bg-muted my-8 rounded-md border transition-colors"
+          className="my-8 rounded-md border bg-slate-100 transition-colors"
           priority
         />
       )}

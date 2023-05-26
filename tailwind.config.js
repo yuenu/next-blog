@@ -1,3 +1,6 @@
+// const { fontFamily } = require("tailwindcss/defaultTheme")
+import { fontFamily } from 'tailwindcss/defaultTheme'
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -20,6 +23,9 @@ module.exports = {
         accent: {
           DEFAULT: 'var(--accent)',
         },
+      },
+      fontFamily: {
+        sans: ['var(--font-sans)', ...fontFamily.sans],
       },
     },
   },

@@ -12,8 +12,8 @@ import ProgressBar from '@/components/ProgressBar'
 import { ThemeProvider } from './providers'
 
 const sourceCodePro = Source_Code_Pro({
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
   subsets: ['greek'],
+  variable: '--font-sans',
 })
 
 export const metadata: Metadata = {
@@ -35,6 +35,27 @@ export const metadata: Metadata = {
   verification: {
     google: siteConfig.googleVerication,
   },
+  openGraph: {
+    type: 'website',
+    locale: 'zh_TW',
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [`${siteConfig.url}/og.png`],
+    creator: '@yuenu',
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
 export default function RootLayout({
@@ -44,14 +65,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-TW" suppressHydrationWarning>
-      <Head>
-        <link
-          rel="icon"
-          href="/icon?<generated>"
-          type="image/png"
-          sizes="32x32"
-        />
-      </Head>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-MJE37S0CFV"
         strategy="afterInteractive"
@@ -67,8 +80,8 @@ export default function RootLayout({
       </Script>
       <body
         className={cn(
-          sourceCodePro.className,
-          'flex min-h-screen flex-col bg-background'
+          'flex min-h-screen flex-col bg-background font-sans',
+          sourceCodePro.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
