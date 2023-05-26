@@ -2,9 +2,7 @@ import { ImageResponse } from 'next/server'
 
 import { ogImageSchema } from '@/lib/validations/og'
 
-export const config = {
-  runtime: 'edge',
-}
+export const runtime = 'edge'
 
 // const interRegular = fetch(
 //   new URL('../../../assets/fonts/Inter-Regular.ttf', import.meta.url)
