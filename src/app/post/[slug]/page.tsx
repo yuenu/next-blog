@@ -7,11 +7,11 @@ import { allPosts } from 'contentlayer/generated'
 import { ArrowLeft } from 'react-feather'
 
 import '@/styles/mdx.css'
+import { env } from '~/env.mjs'
+
 import { absoluteUrl, cn, formatDate } from '@/lib/utils'
 import { Comment } from '@/components/Comment'
 import { Mdx } from '@/components/Markdown'
-
-import { env } from '../../../..//env.mjs'
 
 async function getPageFromParams(props: PageProps) {
   const slugAsParams = props.params?.slug
