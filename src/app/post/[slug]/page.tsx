@@ -8,6 +8,7 @@ import { ArrowLeft } from 'react-feather'
 
 import '@/styles/mdx.css'
 import { absoluteUrl, cn, formatDate } from '@/lib/utils'
+import { Comment } from '@/components/Comment'
 import { Mdx } from '@/components/Markdown'
 
 import { env } from '../../../..//env.mjs'
@@ -120,6 +121,8 @@ const PostPage = async (props: PageProps) => {
           See all posts
         </Link>
       </div>
+
+      <Comment />
     </Main>
   )
 }
