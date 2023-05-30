@@ -41,6 +41,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   return {
     title: page.title,
     description: `${page.title} - ${page.subtitle}`,
+    keywords: page.tags.split('/'),
     openGraph: {
       title: page.title,
       description: page.subtitle,

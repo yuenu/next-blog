@@ -28,7 +28,7 @@ published: true
 
 現今熱門的狀態管理套件基本上都能找到`subscribe`函數，來監聽 state 的變化，甚至如 zustand 都出了 [middleware](https://docs.pmnd.rs/zustand/integrations/persisting-store-data) 可以直接使用 persist，相當於內建在裡面。
 
-以下例子為 React、Vue，常用的狀態管理框架，redux、zustand、vuex、pinia
+以下例子為 React、Vue，常用的狀態管理套件，redux、zustand、vuex、pinia
 
 - [redux subscribe()](https://redux.js.org/api/store#subscribelistener)
 
@@ -147,7 +147,6 @@ export const useBearStore = create(
 
 ```js
 // store.js
-
 // vue^2.6.14 + vuex 3.6.2
 
 import { loadState, saveState } from '@/utils'
@@ -186,7 +185,6 @@ export default store
 
 ```js
 // store/count.ts
-
 // vue^3.3.2 + pinia^2.0.36
 
 import { loadState, saveState } from '@/utils'
@@ -222,4 +220,4 @@ subscribeToStore()
 
 ## 結論
 
-subscribe 通常是大家比較少去注意到的函數，然後不只是只能作持久化，監測 state 的變化也非常好用
+subscribe 通常是大家在使用狀態管理套件中比較少去注意到的函數，然後不只是只能作持久化，拿來作監測 state 的變化也非常好用。
