@@ -1,7 +1,6 @@
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
 import { Source_Code_Pro } from 'next/font/google'
-import Head from 'next/head'
 import Script from 'next/script'
 import { Footer, Header } from '@/components'
 

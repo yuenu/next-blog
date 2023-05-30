@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect } from 'react'
 import NProgress from 'nprogress'
 
@@ -25,9 +26,7 @@ export default function ProgressBar() {
           top: 0;
           left: 0;
           width: 100%;
-          height: ${
-            typeof height === `string` ? height : `${height}px`
-          };
+          height: ${typeof height === `string` ? height : `${height}px`};
         }
         /* Fancy blur effect */
         #nprogress .peg {
@@ -50,8 +49,7 @@ export default function ProgressBar() {
     NProgress.configure({ showSpinner: false })
 
     const handleAnchorClick = (event: MouseEvent) => {
-      const targetUrl = (event.currentTarget as HTMLAnchorElement)
-        .href
+      const targetUrl = (event.currentTarget as HTMLAnchorElement).href
       const currentUrl = location.href
       if (targetUrl !== currentUrl) {
         NProgress.start()

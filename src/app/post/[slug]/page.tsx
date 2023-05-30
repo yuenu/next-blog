@@ -14,7 +14,7 @@ import { Comment } from '@/components/Comment'
 import { Mdx } from '@/components/Markdown'
 
 async function getPageFromParams(props: PageProps) {
-  const slugAsParams = props.params?.slug
+  const slugAsParams = props.params.slug
   const page = allPosts.find((post) => post.slug === slugAsParams)
 
   if (!page) {
