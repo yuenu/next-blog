@@ -1,7 +1,7 @@
 ---
 title: React如何在同一個Repo用拆分不同裝置的Code
 subtitle: Desktop 與 Mobile(h5)版本，使用不同的domain，也拆分了不同的專案，要如何整合在同一個專案內？
-image: /images/post/react-resposive-code-splitting/post.jpg
+image: /images/post/react-resposive-code-splitting/post.webp
 date: 2023-05-24
 slug: react-resposive-code-splitting
 tags: react/code splitting/React Lazy/React Suspense/專案拆分
@@ -62,11 +62,11 @@ B 專案(手機版、Mobile version)
 
 在一般的情況下這種方式是沒有問題的，但是假如你在電腦上開了手機版的 Domain ，頁面便會變得非常奇怪
 
-![PC Home mobile page](/images/post/react-resposive-code-splitting/pchome.png)
+![PC Home mobile page](/images/post/react-resposive-code-splitting/pchome.webp)
 
 在 SEO 權重的分配下有可能 Mobile 的 Domain 上到了搜尋結果的第一頁，用戶點了頁面以為此網站有問題，就直接關掉此網頁
 
-![ithelp mobile page](/images/post/react-resposive-code-splitting/ithelp.png)
+![ithelp mobile page](/images/post/react-resposive-code-splitting/ithelp.webp)
 
 > 我對 SEO 相關的優化不是太了解 😓 ，之前的工作都是使用 CSR(Client side render)的框架
 
@@ -414,7 +414,7 @@ export default App
 
 已上就是全部了，不清楚的可以去看[dmoe](https://react-code-splitting-example-self.vercel.app/)，開 Network 去觀察
 
-![deploy to real domain to check](/images/post/react-resposive-code-splitting/test.png)
+![deploy to real domain to check](/images/post/react-resposive-code-splitting/test.webp)
 
 ## 結論
 

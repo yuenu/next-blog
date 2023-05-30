@@ -1,7 +1,7 @@
 ---
 title: 我配置了webpack的設置，讓編譯的時間減少超過一半以上的時間
 subtitle: Run server要花55秒左右，save recomplie 要花24秒左右
-image: /images/post/legacy-project-optimization/g1.png
+image: /images/post/legacy-project-optimization/g1.webp
 slug: legacy-project-optimization
 date: 2023-01-06
 tags: '優化/vue2/react/webpack'
@@ -97,7 +97,7 @@ module.exports = ConsolegPlugin
 
 ### 緩存 loader 的執行結果
 
-![webpack babel setting](/images/post/legacy-project-optimization/g3.png)
+![webpack babel setting](/images/post/legacy-project-optimization/g3.webp)
 [Source](https://webpack.docschina.org/loaders/babel-loader#babel-loader-is-slow)
 
 我們可以加上 cacheDirectory 的選項來 cache 之前編譯過的檔案，減少 webpack 構建時 Babel 重新編譯過程
@@ -209,7 +209,7 @@ module.exports = {
 
 ## 結論
 
-![React Router](/images/post/legacy-project-optimization/g2.png)
+![React Router](/images/post/legacy-project-optimization/g2.webp)
 
 原本約 55 秒
 改進後約 16 秒
