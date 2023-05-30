@@ -1,0 +1,225 @@
+---
+title: 關於數據持久化，以Redux、zustand、vuex、pinia為例
+subtitle: subscribe function 你有聽過嗎？
+image: /images/post/redux-how-to-persist-data/persist.webp
+date: 2023-05-29
+slug: redux-how-to-persist-data
+tags: data persist/subscribe/redux/redux persist/zustand/pinia/vuex
+published: true
+---
+
+## 數據持久化
+
+關於數據持久基本是前端許多功能實現上必須了解的東西，常見的如 localStorage、sessionStorage、indexedDB，儲存例如一些用戶資料、記憶狀態、版本資訊、不太會變動的數據....
+
+例如我們重整頁面的時候，我們會不希望
+
+- redux 中的儲存的數據被清空
+
+- client 端已經拿過這些資料的話就不要發請求，不要每次都從 sever 拿資料減少流量
+
+> [TanStack Query](https://tanstack.com/query/latest/)、[SWR](https://swr.vercel.app/)，這兩個 library 也可以達到類似的效果，視你的專案而定。
+
+要實現持久化, 最簡單的方法是 google search type `套件名稱 persist` 就能找到相對應的 library 可以使用，而這篇將以 Redux 為例，講解熱門 state mangerment library 如何不使用其他多餘的套件自己控制持久化數據，
+
+> 各套件相對應的 library: [redux-persist](https://github.com/rt2zz/redux-persist)、[vuex-persist](https://github.com/championswimmer/vuex-persist#readme)、[pinia-plugin-persistedstate](https://github.com/prazdevs/pinia-plugin-persistedstate)
+
+## Core
+
+現今熱門的狀態管理套件基本上都能找到`subscribe`函數，來監聽 state 的變化，甚至如 zustand 都出了 [middleware](https://docs.pmnd.rs/zustand/integrations/persisting-store-data) 可以直接使用 persist，相當於內建在裡面。
+
+以下例子為 React、Vue，常用的狀態管理框架，redux、zustand、vuex、pinia
+
+- [redux subscribe()](https://redux.js.org/api/store#subscribelistener)
+
+- [zustand subscribe()](<https://docs.pmnd.rs/zustand/recipes/recipes#transient-updates-(for-frequent-state-changes)>)
+
+- [Vuex subscribe()](https://vuex.vuejs.org/zh/api/#subscribe)
+
+- [pinia subscribe()](https://pinia.vuejs.org/core-concepts/state.html#subscribing-to-the-state)
+
+此篇的核心就是利用 subscribe 的監聽將變動的 state，儲存至 localStorage，然後在初始化 APP 的 create store 的時候再將 localStorage 中的資料拿出來當作初始資料。
+
+---
+
+這邊我們先寫一個 util 的 function，用來跟 localStorage(依需求選擇使用 localStorage 或是 sessionStorage) 交互
+
+```js
+// utils.js
+
+/** 讀取 store
+ *
+ * @returns {any|undefined}
+ */
+export const loadState = () => {
+  try {
+    // localStorage 的 key name 可以自己定義或是由傳入的 arguments 來決定，
+    // 這邊我以 "state" 固定當作 key name
+    const s = localStorage.getItem('state')
+    if (s == null) {
+      return undefined
+    }
+    return JSON.parse(s)
+  } catch (err) {
+    console.warn('load state failed', err)
+    return undefined
+  }
+}
+
+/**
+ * 存儲 store
+ * @param {object} state
+ */
+export const saveState = (state) => {
+  try {
+    const s = JSON.stringify(state)
+    localStorage.setItem('state', s)
+  } catch (err) {
+    console.warn('save state failed', err)
+  }
+}
+```
+
+### Redux
+
+```js
+// store.js
+
+import { loadState, saveState } from '@/utils'
+import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers } from 'redux'
+
+// Slice
+import siteReducer from './slice/site'
+import todoReducer from './slice/todo'
+
+const reducer = combineReducers({
+  todo: todoReducer,
+  site: siteReducer,
+})
+
+// 從 localStorage 拿取上次儲存的資料
+const preloadedState = loadState()
+
+const store = configureStore({
+  reducer,
+  devTools: process.env.NODE_ENV !== 'production',
+  preloadedState,
+})
+
+store.subscribe(() => {
+  // 第一種寫法： 儲存所有的 state
+  const state = store.getState()
+  saveState(state)
+
+  // 第二種寫法： 只想儲存某些 reducer (or slice)
+  // const { site } = store.getState()
+  // saveState({ site })
+})
+
+export default store
+```
+
+### zustand
+
+因為本身就有提供 persist 的 middleware 了，所以這邊我們直接拿官方的例子來用
+
+```js
+// https://docs.pmnd.rs/zustand/integrations/persisting-store-data
+import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
+
+export const useBearStore = create(
+  persist(
+    (set, get) => ({
+      bears: 0,
+      addABear: () => set({ bears: get().bears + 1 }),
+    }),
+    {
+      name: 'food-storage', // name of the item in the storage (must be unique)
+      storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+    }
+  )
+)
+```
+
+### vuex
+
+```js
+// store.js
+
+// vue^2.6.14 + vuex 3.6.2
+
+import { loadState, saveState } from '@/utils'
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+  },
+  mutations: {
+    increment(state) {
+      state.count++
+    },
+  },
+})
+
+if (localStorage.getItem('state')) {
+  store.replaceState({ ...store.state, ...loadState() })
+}
+
+store.subscribe((_mutation, state) => {
+  saveState(state)
+})
+
+export default store
+```
+
+### pinia
+
+- 利用 [$patch](https://pinia.vuejs.org/zh/core-concepts/state.html#mutating-the-state) 將已儲存的資料塞回去 state
+
+- 利用 [$subscribe](https://pinia.vuejs.org/zh/core-concepts/state.html#subscribing-to-the-state) 來監聽 state 的最新狀態並保存在 localStorage 裡
+
+```js
+// store/count.ts
+
+// vue^3.3.2 + pinia^2.0.36
+
+import { loadState, saveState } from '@/utils'
+import { defineStore, getActivePinia } from 'pinia'
+import { computed, ref } from 'vue'
+
+export const useCounterStore = defineStore('counter', () => {
+  const count = ref(0)
+  const doubleCount = computed(() => count.value * 2)
+  function increment() {
+    count.value++
+  }
+
+  return { count, doubleCount, increment }
+})
+
+const subscribeToStore = async () => {
+  // 當 pinia 初始化後才開始工作
+  while (!getActivePinia()) {
+    await new Promise((resolve) => requestAnimationFrame(resolve))
+  }
+
+  useCounterStore().$patch(loadState())
+
+  useCounterStore().$subscribe((mutation, state) => {
+    console.log({ mutation, state })
+    saveState(state)
+  })
+}
+
+subscribeToStore()
+```
+
+## 結論
+
+subscribe 通常是大家比較少去注意到的函數，然後不只是只能作持久化，監測 state 的變化也非常好用
