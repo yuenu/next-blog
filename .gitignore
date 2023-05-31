@@ -37,3 +37,8 @@ yarn-error.log*
 next-env.d.ts
 
 .contentlayer
+
+# RSS files
+/public/atom.xml
+/public/rss.xml
+/public/feed.json

@@ -20,7 +20,7 @@ const PostPreview = (post: Post) => {
         'space-y-4 rounded-lg border-2 border-transparent hover:border-orange-400'
       )}
     >
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-2">
         <h2 className="text-xl group-hover:text-orange-400">{post.title}</h2>
         <time className="whitespace-nowrap text-gray-400" dateTime={post.date}>
           {formatDate(post.date)}

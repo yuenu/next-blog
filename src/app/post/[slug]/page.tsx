@@ -9,6 +9,7 @@ import { ArrowLeft } from 'react-feather'
 import '@/styles/mdx.css'
 import { env } from '~/env.mjs'
 
+import { generateRSS } from '@/lib/rss'
 import { absoluteUrl, cn, formatDate } from '@/lib/utils'
 import { Comment } from '@/components/Comment'
 import { Mdx } from '@/components/Markdown'
@@ -65,6 +66,8 @@ type PageProps = {
 }
 
 export const generateStaticParams = async () => {
+  generateRSS()
+
   return allPosts.map((page) => ({
     slug: page.slug,
   }))

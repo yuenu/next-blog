@@ -64,6 +64,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-TW" suppressHydrationWarning>
+      <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="josh-hsu.com rss feed"
+          href="/rss.xml"
+        />
+      </head>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-MJE37S0CFV"
         strategy="afterInteractive"
