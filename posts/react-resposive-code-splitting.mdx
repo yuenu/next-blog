@@ -120,7 +120,7 @@ yarn add react-router-dom && yarn add -D @types/node
 
 安裝完後會變成
 
-```json
+```json {7, 10}
 // package.json
 {
   // ...
@@ -138,7 +138,7 @@ yarn add react-router-dom && yarn add -D @types/node
 
 接著調整一下 vite.config.ts 以及 tsconfig.json
 
-```ts
+```ts showLineNumbers {4,11-18}
 // vite.config.ts
 /** @type {import('vite').UserConfig} */
 
@@ -160,7 +160,7 @@ export default defineConfig({
 })
 ```
 
-```json
+```json {6-8}
 // tsconfig.json
 {
   "compilerOptions": {
@@ -178,7 +178,7 @@ export default defineConfig({
 
 > 'module' is not defined. eslint (no-undef)
 
-```js
+```js {3}
 // .eslintrc.cjs
 module.exports = {
   env: { browser: true, es2020: true, node: true }, // 加上 node: true
@@ -251,11 +251,11 @@ module.exports = {
 └── vite.config.ts
 ```
 
-Desktop 的 code ， Mobile 的就依樣畫葫蘆 ，若有問題請看[demo repo](https://github.com/yuenu/react-code-splitting)
+已下是 Desktop 的 code，Mobile 的就依樣畫葫蘆，若有問題請看[demo repo](https://github.com/yuenu/react-code-splitting)
 
 路徑: src/apps/Desktop/index.tsx
 
-```js
+```js showLineNumbers
 // src/apps/Desktop/index.tsx
 import React, { Suspense } from 'react'
 
@@ -274,7 +274,7 @@ export default AsyncApp
 
 路徑: src/apps/Desktop/router.tsx
 
-```js
+```js showLineNumbers
 // src/apps/Desktop/router.tsx
 import { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
@@ -300,7 +300,7 @@ export default IRoute
 
 路徑: src/apps/Desktop/App.tsx
 
-```js
+```js showLineNumbers
 // src/apps/Desktop/App.tsx
 import { BrowserRouter, Link } from 'react-router-dom'
 
@@ -327,7 +327,7 @@ export default App
 
 路徑: src/apps/Desktop/pages/Prodcut.tsx
 
-```js
+```js showLineNumbers
 // src/apps/Desktop/pages/About.tsx
 function About() {
   return (
@@ -370,7 +370,7 @@ yarn add react-responsive
 
 路徑: src/hoc/responsive.tsx
 
-```js
+```js showLineNumbers
 // src/hoc/responsive.tsx
 import MediaQuery from 'react-responsive'
 
@@ -395,7 +395,7 @@ export default Screen
 
 路徑: src/App.tsx
 
-```js
+```js showLineNumbers
 import { Desktop, Mobile } from '@/apps'
 import Responsive from '@/hoc/responsive'
 

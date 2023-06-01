@@ -16,7 +16,7 @@
   color: gray;
 }
 [data-rehype-pretty-code-fragment] .line--highlighted {
-  @apply bg-slate-300 bg-opacity-10;
+  @apply bg-slate-300 bg-opacity-20;
 }
 [data-rehype-pretty-code-fragment] .line-highlighted span {
   @apply relative;

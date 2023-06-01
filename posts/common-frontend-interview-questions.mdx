@@ -21,7 +21,7 @@ published: true
 const cloned = JSON.parse(JSON.stringify(objectToClone))
 ```
 
-```js
+```js showLineNumbers
 /**
  * 簡易版 deepClone
  * 有許多 Edge cases 沒有考慮到，
@@ -57,7 +57,7 @@ export function deepClone(source) {
 
 請實作一個 debounce 的 function，以及請說明 debounce 的應用場合
 
-```js
+```js showLineNumbers
 /**
  * 簡易版
  * @param {Function} func func The function to debounce.
@@ -78,7 +78,7 @@ function debounce(fun, delay) {
 }
 ```
 
-```js
+```js showLineNumbers
 /**
  * 簡易版 + 立即執行
  * @param {Function} func func The function to debounce.
@@ -130,7 +130,7 @@ function debounce(func, wait, immediate) {
 
 ## Throttle
 
-```js
+```js showLineNumbers
 function throttle(func, timeout = 250) {
   let last
   let timer

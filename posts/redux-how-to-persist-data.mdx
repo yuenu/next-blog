@@ -44,7 +44,7 @@ published: true
 
 這邊我們先寫一個 util 的 function，用來跟 localStorage(依需求選擇使用 localStorage 或是 sessionStorage) 交互
 
-```js
+```js showLineNumbers
 // utils.js
 
 /** 讀取 store
@@ -82,7 +82,7 @@ export const saveState = (state) => {
 
 ### Redux
 
-```js
+```js showLineNumbers
 // store.js
 
 import { loadState, saveState } from '@/utils'
@@ -124,7 +124,7 @@ export default store
 
 因為本身就有提供 persist 的 middleware 了，所以這邊我們直接拿官方的例子來用
 
-```js
+```js showLineNumbers
 // https://docs.pmnd.rs/zustand/integrations/persisting-store-data
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
@@ -145,7 +145,7 @@ export const useBearStore = create(
 
 ### vuex
 
-```js
+```js showLineNumbers
 // store.js
 // vue^2.6.14 + vuex 3.6.2
 
@@ -183,7 +183,7 @@ export default store
 
 - 利用 [$subscribe](https://pinia.vuejs.org/zh/core-concepts/state.html#subscribing-to-the-state) 來監聽 state 的最新狀態並保存在 localStorage 裡
 
-```js
+```js showLineNumbers
 // store/count.ts
 // vue^3.3.2 + pinia^2.0.36
 
