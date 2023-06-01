@@ -22,6 +22,7 @@ export const generateRSS = () => {
   })
 
   allPosts
+    .filter((post) => post.published)
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
     .forEach((post) => {
       const url = `${siteConfig.url}/posts/${post.slug}`
