@@ -11,8 +11,8 @@ export const Header = ({ ...rest }) => {
         <Link href="/" className="aLink">
           <h1 className="text-3xl font-bold">Josh Hsu</h1>
         </Link>
-        <div className={cn('aLink', 'flex items-center gap-8')}>
-          <Link href="/posts" className={cn('hover:text-orange-400')}>
+        <div className={cn('flex items-center gap-8')}>
+          <Link href="/posts" className={cn('aLink', 'hover:text-orange-400')}>
             Posts
           </Link>
           <Link
