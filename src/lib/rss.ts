@@ -25,10 +25,9 @@ export const generateRSS = () => {
     .filter((post) => post.published)
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
     .forEach((post) => {
-      const url = `${siteConfig.url}/posts/${post.slug}`
       feed.addItem({
-        id: url,
-        link: url,
+        id: post.path,
+        link: siteConfig.url + post.path,
         title: post.title,
         description: post.title,
         date: parseISO(post.date),

@@ -23,6 +23,15 @@ const nextConfig = {
       },
     ]
   },
+  async redirects() {
+    return [
+      {
+        source: '/posts/:slug',
+        destination: '/post/:slug',
+        permanent: true,
+      },
+    ]
+  },
   reactStrictMode: true,
 }
 
