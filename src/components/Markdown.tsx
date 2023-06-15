@@ -129,17 +129,6 @@ const components = {
       {...rest}
     />
   ),
-  // pre: ({ className, ...rest }: React.HTMLAttributes<HTMLPreElement>) => {
-  //   return (
-  //     <pre
-  //       className={cn(
-  //         'mb-4 mt-6 overflow-x-auto rounded-lg border bg-black py-4',
-  //         className
-  //       )}
-  //       {...rest}
-  //     />
-  //   )
-  // },
   pre: CustomPre,
   code: ({ className, ...rest }: React.HTMLAttributes<HTMLElement>) => (
     <code
