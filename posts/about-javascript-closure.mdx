@@ -1,0 +1,123 @@
+---
+title: 我以為的閉包不是我以為的閉包...
+subtitle: 面試官:請解釋一下閉包
+image: /images/post/about-javascript-closure/post.webp
+date: 2023-06-15
+slug: about-javascript-closure
+tags: closure/javascript closure/閉包/我以為的閉包不是我以為的閉包/面試閉包
+published: true
+---
+
+前幾天同事問我為什麼這段 code 要這樣寫？
+
+```js showLineNumbers
+import axios from 'axios'
+
+// api.js
+function getList(params) {
+  return axios.post('/api/getList', params)
+}
+```
+
+```js showLineNumbers
+// component
+import { getList } from '@/api'
+
+function getDataList() {
+  // 傳入參數後拿API的資料的function
+  const params = {
+    ...  // 包含一堆要送入的參數
+  }
+  return getList(params)
+}
+```
+
+問我為什麼要這樣寫之後，跟他解釋後，
+
+他問了這樣的問題：
+
+`我以為你是要寫閉包`
+
+![question](/images/post/about-javascript-closure/question.webp)
+
+我心想這不是閉包啊，至少跟我認知的閉包定義不一樣，我問他閉包的定義：一個 function 內返回另一個 function 就是閉包不是嗎？因為之前只有看過 MDN 上的定義以及用法而已，於是我開始研究所謂閉包到底是什麼...
+
+```js showLineNumbers
+// 我認為的閉包
+function makeCounter() {
+  let count = 0
+
+  return function () {
+    return count++
+  }
+}
+
+let counter = makeCounter()
+```
+
+## 一個 function 內返回另一個 function 就是閉包?
+
+首先我們可以先看 code 是返回 axios 的函式，而 axios 返回的是一個 Promise
+
+```js showLineNumbers {9}
+// component
+import { getList } from '@/api'
+
+function getDataList() {
+  // 傳入參數後拿API的資料的function
+  const params = {
+    ...  // 包含一堆要送入的參數
+  }
+  return getList(params)
+}
+```
+
+[Promise](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise) `物件` 代表一個即將完成、或失敗的非同步操作，以及它所產生的值。 from MDN
+
+```js showLineNumbers
+// 驗證一下
+typeof new Promise((resolve) => resolve('Hello')) // 'object'
+```
+
+所以 `getDataList` 這個 function 返回的是一個 function 嗎？
+
+## 怎麼解釋閉包
+
+這兩篇解釋得蠻清楚的
+
+1.  [所有的函式都是閉包](https://blog.huli.tw/2018/12/08/javascript-closure/#%E6%89%80%E6%9C%89%E7%9A%84%E5%87%BD%E5%BC%8F%E9%83%BD%E6%98%AF%E9%96%89%E5%8C%85)
+
+2.  [https://zh.javascript.info/closure#la-ji-shou-ji](https://zh.javascript.info/closure#la-ji-shou-ji) 往上滑一點就能看到
+    ![closure](/images/post/about-javascript-closure/closure.webp)
+
+闭包 是指一个函数可以记住其外部变量并可以访问这些变量。在某些编程语言中，这是不可能的，或者应该以一种特殊的方式编写函数来实现。但如上所述，在 JavaScript 中，所有函数都是天生闭包的（只有一个例外，将在 "new Function" 语法 中讲到）。
+
+也就是说：JavaScript 中的函数会自动通过隐藏的 [[Environment]] 属性记住创建它们的位置，所以它们都可以访问外部变量。
+
+在面试时，前端开发者通常会被问到“什么是闭包？”，正确的回答应该是闭包的定义，并解释清楚为什么 JavaScript 中的所有函数都是闭包的，以及可能的关于 [[Environment]] 属性和词法环境原理的技术细节。
+
+## 結論
+
+嚴格來說，`一個 function 內返回另一個 function 就是閉包`，這句話一點也沒錯，因為"所有的函式都是閉包"。但如果面試官問：請解釋一下閉包，這樣的回答是會被打槍並且被洗臉。也是藉由這次的經驗我才完全釐清之前對於閉包的誤解，所以標題才會是"我以為的閉包不是我以為的閉包"。
+
+本篇並沒有打算討論何為閉包或閉包的定義，因為網路上已經有一堆優秀的文章解釋了，主要打這篇文章是為了讓我對於這次學習有個總結，以及附上參考連結讓我以後複習有個參照。
+
+所以你也以為閉包是哪種呢？
+
+1. 一個 function 內返回另一個 function 就是閉包
+
+2. 閉包（Closure）是函式以及該函式被宣告時所在的作用域環境（lexical environment）的組合。 - from MDN
+
+3. 所有的函式都是閉包
+
+## Ref
+
+- `MDN` [閉包](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Closures)
+
+- [变量作用域，闭包](https://zh.javascript.info/closure)
+
+- [所有的函式都是閉包：談 JS 中的作用域與 Closure](https://blog.huli.tw/2018/12/08/javascript-closure/)
+
+- [深入理解 javascript 原型和闭包](https://www.cnblogs.com/wangfupeng1988/p/3977924.html)
+
+- [Closures & Currying in JavaScript](https://engineering.cerner.com/blog/closures-and-currying-in-javascript/)
