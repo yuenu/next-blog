@@ -1,0 +1,73 @@
+---
+title: jsp 錯誤記錄 - References to interface static methods are allowed only at source level 1.8 or above
+subtitle: References to interface static methods are allowed only at source level 1.8 or above
+image: /images/post/references-to-interface-static-methods-are-allowed-only-at-source-level-1.8-or-above/post.webp
+date: 2023-07-11
+slug: references-to-interface-static-methods-are-allowed-only-at-source-level-1.8-or-above
+tags: JAVA/jsp/tomcat/References to interface static methods are allowed only at source level 1.8 or above/JAVA 1.8
+published: true
+---
+
+> References to interface static methods are allowed only at source level 1.8 or above
+
+最近前端相關相對比較少所以被指派去寫 jsp 的專案，但我在 local 端都起不來，然後其他後端又都是改一改直接上 sever 所以他們也很久沒有在 local 端跑過了，
+然後我改了幾次也部署了幾次造成了線上的 Tomcat run out of memory 要重啟，
+
+JAVA 我用了[jenv](https://github.com/jenv/jenv)來做版本控制、nvm 隨便裝，Tomcat 試了 7.x、8.x、9.x 都沒有辦法
+
+```bash
+❯ mvn -v
+Apache Maven 3.8.8 (4c87b05d9aedce574290d1acc98575ed5eb6cd39)
+Maven home: /usr/local/apache-maven-3.8.8
+Java version: 1.8.0_372, vendor: Azul Systems, Inc., runtime: /Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home/jre
+Default locale: zh_TW, platform encoding: UTF-8
+OS name: "mac os x", version: "13.3.1", arch: "aarch64", family: "mac"
+```
+
+換了一堆版本跟 IDE 依舊噴 "References to interface static methods are allowed only at source level 1.8 or above"
+
+拿了這個錯誤訊息在 Google 中尋找了 3 天，最後找到了[答案](https://stackoverflow.com/questions/40035001/lambda-expressions-in-jsp-files-will-not-compile)發現原來就在搜尋結果前幾個，然後我也很早就看過，但不覺得是答案，後面發現有點過了就沒有再點開來仔細看...
+
+## 解法 Solution
+
+可以收尋
+
+> <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+
+```xml showLineNumbers {14-21}
+// apache-tomcat-8.5.8\conf\web.xml
+<servlet>
+    <servlet-name>jsp</servlet-name>
+    <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+    <init-param>
+        <param-name>fork</param-name>
+        <param-value>false</param-value>
+    </init-param>
+    <init-param>
+        <param-name>xpoweredBy</param-name>
+        <param-value>false</param-value>
+    </init-param>
+    // 加上以下這段
+    <init-param>
+      <param-name>compilerSourceVM</param-name>
+      <param-value>1.8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>compilerTargetVM</param-name>
+      <param-value>1.8</param-value>
+    </init-param>
+    <load-on-startup>3</load-on-startup>
+</servlet>
+```
+
+## 結論
+
+總結來講排錯的時間我斷斷續續花了 3 天
+
+後面寫 jsp 功能寫了一天，覺得好麻煩..
+
+最後我想說一句，都 2023 年了還在用 jsp ?
+
+## Ref
+
+[Lambda expressions in JSP files will not compile](https://stackoverflow.com/questions/40035001/lambda-expressions-in-jsp-files-will-not-compile)
